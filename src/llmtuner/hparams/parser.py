@@ -40,11 +40,11 @@ def _check_dependencies(disabled: bool) -> None:
     if disabled:
         logger.warning("Version checking has been disabled, may lead to unexpected behaviors.")
     else:
-        require_version("transformers>=4.37.2", "To fix: pip install transformers>=4.37.2")
+        require_version("transformers>=4.46.0", "To fix: pip install transformers>=4.46.0")
         require_version("datasets>=2.14.3", "To fix: pip install datasets>=2.14.3")
-        require_version("accelerate>=0.21.0", "To fix: pip install accelerate>=0.21.0")
-        require_version("peft>=0.8.2", "To fix: pip install peft>=0.8.2")
-        require_version("trl>=0.7.6", "To fix: pip install trl>=0.7.6")
+        require_version("accelerate>=0.34.0", "To fix: pip install accelerate>=0.34.0")
+        require_version("peft>=0.12.0", "To fix: pip install peft>=0.12.0")
+        require_version("trl>=0.11.0", "To fix: pip install trl>=0.11.0")
 
 
 def _parse_args(parser: "HfArgumentParser", args: Optional[Dict[str, Any]] = None) -> Tuple[Any]:

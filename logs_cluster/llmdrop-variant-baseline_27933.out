@@ -1,0 +1,37 @@
+========================================
+  Job  : 27933
+  Node : cs001
+  Model: mistralai/Mistral-7B-v0.1
+========================================
+
+[1/3] StreamLLM baseline (n_init=128, n_local=4096)...
+Loading mistralai/Mistral-7B-v0.1 ...
+[StreamLLM] patched 32 attention modules (n_init=128, n_local=4096)
+[StreamLLM] patched model.model.forward to skip sliding-window mask
+Variant applied: streamllm
+Saving to ../results_prune/mistral-base-streamllm-nodrop/checkpoint ...
+Done.
+  Checkpoint : ../results_prune/mistral-base-streamllm-nodrop/checkpoint
+
+[2/3] NTK-RoPE baseline (factor=4.0)...
+Loading mistralai/Mistral-7B-v0.1 ...
+[NTK-RoPE] updated 1 rotary_emb modules (factor=4.0)
+Variant applied: ntk_rope
+Saving to ../results_prune/mistral-base-ntk_rope-nodrop/checkpoint ...
+Done.
+  Checkpoint : ../results_prune/mistral-base-ntk_rope-nodrop/checkpoint
+
+[3/3] GQA baseline (num_kv_heads=4)...
+Loading mistralai/Mistral-7B-v0.1 ...
+[GQA] merged KV heads in 32 modules (target=4, skipped=0 already at/below target)
+Variant applied: gqa
+Saving to ../results_prune/mistral-base-gqa-nodrop/checkpoint ...
+Done.
+  Checkpoint : ../results_prune/mistral-base-gqa-nodrop/checkpoint
+
+========================================
+  Done. Checkpoints:
+    ../results_prune/mistral-base-streamllm-nodrop/checkpoint
+    ../results_prune/mistral-base-ntk_rope-nodrop/checkpoint
+    ../results_prune/mistral-base-gqa-nodrop/checkpoint
+========================================

@@ -1,0 +1,36 @@
+========================================
+  Job         : 28051
+  Node        : cs001
+  Full model  : mistralai/Mistral-7B-v0.1
+  Pruned model: ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+  start_size  : 4
+  recent_size : 2000
+========================================
+
+[1/2] Evaluating full (unpruned) model...
+Loading model from: mistralai/Mistral-7B-v0.1
+Model loaded: 13812.5 MiB
+[enable_streaming_llm] patched 32 attention modules (start_size=4, recent_size=2000)
+[streaming] start_size=4  recent_size=2000
+tensor([[    1,   327,  5606,   365,  3619,   360,   327, 28705,    13]])
+seq_len: 9
+
+============================================================
+  Model          : mistralai/Mistral-7B-v0.1
+  Streaming      : sink=4, window=2000
+  Tokens eval'd  : 8
+  Perplexity     : 4140.0000
+  Throughput     : 3.5 tok/s
+  Elapsed        : 2.3 s
+  Model weights  : 13812.5 MiB
+  Peak GPU mem   : 13825.5 MiB
+  KV cache mem   : 13.0 MiB
+============================================================
+
+[2/2] Evaluating pruned streamllm model...
+Loading model from: ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+Model loaded: 13172.4 MiB
+[enable_streaming_llm] patched 24 attention modules (start_size=4, recent_size=2000)
+[streaming] start_size=4  recent_size=2000
+tensor([[    1,   327,  5606,   365,  3619,   360,   327, 28705,    13]])
+seq_len: 9

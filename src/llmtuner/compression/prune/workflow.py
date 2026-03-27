@@ -48,7 +48,17 @@ def run_prune(
 
     # 🔍 model & tokenizer
     model, tokenizer = load_model_and_tokenizer(model_args, finetuning_args, training_args.do_train)
-    
+
+    # ── Attention variant patch ────────────────────────────────────────────────
+    # Applied BEFORE post_dropping early exits so that streamllm_n_init etc.
+    # are present in model.config when post_layers_drop does deepcopy(model.config)
+    # and saves config.json — otherwise the fields are missing and the custom
+    # modeling class cannot re-apply the patches at eval/benchmark time.
+    if getattr(pruning_args, "attention_variant", None):
+        from .attention_variants import patch_attention_variant
+        patch_attention_variant(model, pruning_args)
+        accelerator.print(f"Attention variant applied: {pruning_args.attention_variant}")
+
     if pruning_args.prune_method == "layer_drop" and pruning_args.layer_drop_method == "post_dropping":
         assert (os.environ.get("ACCELERATE_USE_DEEPSPEED", "false")) and (os.environ.get("ACCELERATE_USE_FSDP", "false"))
         reserved_layer_list = load_json(os.path.join(pruning_args.prune_model_save_path, "reserved_layers.json"))

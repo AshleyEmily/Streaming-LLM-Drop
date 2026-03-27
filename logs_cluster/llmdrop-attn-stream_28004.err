@@ -1,0 +1,183 @@
+Loading python 3.12.12 module ....
+The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+[INFO|configuration_utils.py:672] 2026-03-24 19:25:31,050 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
+[INFO|configuration_utils.py:744] 2026-03-24 19:25:31,051 >> Model config MistralConfig {
+  "architectures": [
+    "MistralForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 32768,
+  "model_type": "mistral",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pad_token_id": null,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 10000.0,
+    "rope_type": "default"
+  },
+  "sliding_window": 4096,
+  "tie_word_embeddings": false,
+  "transformers_version": "5.3.0",
+  "use_cache": true,
+  "vocab_size": 32000
+}
+
+[INFO|configuration_utils.py:672] 2026-03-24 19:25:31,611 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
+[INFO|configuration_utils.py:744] 2026-03-24 19:25:31,612 >> Model config MistralConfig {
+  "architectures": [
+    "MistralForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 32768,
+  "model_type": "mistral",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pad_token_id": null,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 10000.0,
+    "rope_type": "default"
+  },
+  "sliding_window": 4096,
+  "tie_word_embeddings": false,
+  "transformers_version": "5.3.0",
+  "use_cache": true,
+  "vocab_size": 32000
+}
+
+[INFO|modeling_utils.py:710] 2026-03-24 19:25:31,701 >> loading weights file model.safetensors from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/model.safetensors.index.json
+[INFO|configuration_utils.py:1014] 2026-03-24 19:25:31,702 >> Generate config GenerationConfig {
+  "bos_token_id": 1,
+  "eos_token_id": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "use_cache": false
+}
+
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:38,  7.48it/s]Loading weights:   8%|▊         | 22/291 [00:00<00:02, 108.08it/s]Loading weights:  14%|█▎        | 40/291 [00:00<00:02, 124.28it/s]Loading weights:  20%|█▉        | 58/291 [00:00<00:01, 134.45it/s]Loading weights:  26%|██▌       | 76/291 [00:00<00:01, 137.52it/s]Loading weights:  32%|███▏      | 94/291 [00:00<00:01, 144.19it/s]Loading weights:  38%|███▊      | 112/291 [00:00<00:01, 146.02it/s]Loading weights:  45%|████▍     | 130/291 [00:00<00:01, 149.58it/s]Loading weights:  51%|█████     | 148/291 [00:01<00:00, 148.12it/s]Loading weights:  57%|█████▋    | 166/291 [00:01<00:00, 151.99it/s]Loading weights:  63%|██████▎   | 184/291 [00:01<00:00, 149.89it/s]Loading weights:  69%|██████▉   | 202/291 [00:01<00:00, 154.20it/s]Loading weights:  76%|███████▌  | 220/291 [00:01<00:00, 148.95it/s]Loading weights:  82%|████████▏ | 238/291 [00:01<00:00, 152.45it/s]Loading weights:  88%|████████▊ | 256/291 [00:01<00:00, 152.57it/s]Loading weights:  94%|█████████▍| 274/291 [00:01<00:00, 152.72it/s]Loading weights: 100%|██████████| 291/291 [00:01<00:00, 147.56it/s]
+[INFO|configuration_utils.py:967] 2026-03-24 19:25:34,198 >> loading configuration file generation_config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/generation_config.json
+[INFO|configuration_utils.py:1014] 2026-03-24 19:25:34,198 >> Generate config GenerationConfig {
+  "bos_token_id": 1,
+  "eos_token_id": 2
+}
+
+[INFO|dynamic_module_utils.py:406] 2026-03-24 19:25:34,281 >> Could not locate the custom_generate/generate.py inside mistralai/Mistral-7B-v0.1.
+Using custom data configuration default-c6e6b935de1ad2ef
+Loading Dataset Infos from /home/015902406/venvs/llmdrop/lib/python3.12/site-packages/datasets/packaged_modules/json
+Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092
+Found cached dataset json (/home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092)
+Loading Dataset info from /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092
+Loading cached processed dataset at /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092/cache-3952855f25c8d6c5.arrow
+Loading cached processed dataset at /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092/cache-075905fd272a1a09.arrow
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[INFO|configuration_utils.py:672] 2026-03-24 19:25:43,753 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
+[INFO|configuration_utils.py:744] 2026-03-24 19:25:43,754 >> Model config MistralConfig {
+  "architectures": [
+    "MistralForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 32768,
+  "model_type": "mistral",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pad_token_id": null,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 10000.0,
+    "rope_type": "default"
+  },
+  "sliding_window": 4096,
+  "tie_word_embeddings": false,
+  "transformers_version": "5.3.0",
+  "use_cache": true,
+  "vocab_size": 32000
+}
+
+[INFO|configuration_utils.py:672] 2026-03-24 19:25:44,319 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
+[INFO|configuration_utils.py:744] 2026-03-24 19:25:44,319 >> Model config MistralConfig {
+  "architectures": [
+    "MistralForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 32768,
+  "model_type": "mistral",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pad_token_id": null,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 10000.0,
+    "rope_type": "default"
+  },
+  "sliding_window": 4096,
+  "tie_word_embeddings": false,
+  "transformers_version": "5.3.0",
+  "use_cache": true,
+  "vocab_size": 32000
+}
+
+[INFO|modeling_utils.py:710] 2026-03-24 19:25:44,412 >> loading weights file model.safetensors from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/model.safetensors.index.json
+[INFO|configuration_utils.py:1014] 2026-03-24 19:25:44,413 >> Generate config GenerationConfig {
+  "bos_token_id": 1,
+  "eos_token_id": 2,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "use_cache": false
+}
+
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:  17%|█▋        | 49/291 [00:00<00:00, 441.20it/s]Loading weights:  32%|███▏      | 94/291 [00:00<00:00, 428.96it/s]Loading weights:  48%|████▊     | 141/291 [00:00<00:00, 437.44it/s]Loading weights:  66%|██████▋   | 193/291 [00:00<00:00, 456.70it/s]Loading weights:  85%|████████▍ | 247/291 [00:00<00:00, 468.70it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 468.25it/s]
+[INFO|configuration_utils.py:967] 2026-03-24 19:25:45,620 >> loading configuration file generation_config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/generation_config.json
+[INFO|configuration_utils.py:1014] 2026-03-24 19:25:45,621 >> Generate config GenerationConfig {
+  "bos_token_id": 1,
+  "eos_token_id": 2
+}
+
+[INFO|dynamic_module_utils.py:406] 2026-03-24 19:25:45,699 >> Could not locate the custom_generate/generate.py inside mistralai/Mistral-7B-v0.1.
+[INFO|configuration_utils.py:434] 2026-03-24 19:25:45,718 >> Configuration saved in ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint/config.json
+[INFO|configuration_utils.py:803] 2026-03-24 19:25:45,720 >> Configuration saved in ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint/generation_config.json
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:15<00:00, 15.59s/it]Writing model shards: 100%|██████████| 1/1 [00:15<00:00, 15.60s/it]
+[INFO|modeling_utils.py:3438] 2026-03-24 19:26:01,341 >> Model weights saved in ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint/model.safetensors
+[INFO|tokenization_utils_base.py:2091] 2026-03-24 19:26:01,358 >> tokenizer config file saved in ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint/tokenizer_config.json
+[INFO|configuration_utils.py:434] 2026-03-24 19:26:01,426 >> Configuration saved in ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint/config.json

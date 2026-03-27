@@ -37,7 +37,7 @@ CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
   --logging_steps 10 \
-  --bf16 \
+  --fp16 \
   --n_calibration_samples ${n_calibration_samples} \
   --prune_method ${prune_method} \
   --layer_drop_method ${layer_drop_method} \
@@ -64,7 +64,7 @@ python \
   --cutoff_len ${seq_len} \
   --output_dir ${output_dir} \
   --logging_steps 10 \
-  --bf16 \
+  --fp16 \
   --n_calibration_samples ${n_calibration_samples} \
   --prune_method ${prune_method} \
   --layer_drop_method ${layer_drop_method} \

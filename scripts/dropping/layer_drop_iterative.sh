@@ -39,7 +39,7 @@ for ((epoch=1; epoch<=num_epochs; epoch++)) do
     --target_layer ${target_layer} \
     --output_dir ${output_dir} \
     --logging_steps 10 \
-    --bf16 \
+    --fp16 \
     --n_calibration_samples ${n_calibration_samples} \
     --prune_method ${prune_method} \
     --layer_drop_method ${layer_drop_method} \
@@ -65,7 +65,7 @@ for ((epoch=1; epoch<=num_epochs; epoch++)) do
     --cutoff_len ${seq_len} \
     --output_dir ${output_dir} \
     --logging_steps 10 \
-    --bf16 \
+    --fp16 \
     --n_calibration_samples ${n_calibration_samples} \
     --prune_method ${prune_method} \
     --layer_drop_method ${layer_drop_method} \

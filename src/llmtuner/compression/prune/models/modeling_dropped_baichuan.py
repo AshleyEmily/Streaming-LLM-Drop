@@ -35,8 +35,26 @@ from torch.nn import functional as F
 from transformers import PreTrainedModel, PretrainedConfig
 from transformers.activations import ACT2FN
 from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast
-from transformers.generation.utils import GenerationConfig
-from transformers.utils import logging, ContextManagers
+try:
+    from transformers import GenerationConfig
+except ImportError:
+    from transformers.generation.utils import GenerationConfig
+try:
+    from transformers.utils import ContextManagers
+except ImportError:
+    from contextlib import contextmanager
+    from contextlib import ExitStack
+    class ContextManagers:
+        def __init__(self, context_managers):
+            self.context_managers = context_managers
+        def __enter__(self):
+            self._stack = ExitStack()
+            for cm in self.context_managers:
+                self._stack.enter_context(cm)
+            return self
+        def __exit__(self, *args):
+            return self._stack.__exit__(*args)
+from transformers.utils import logging
 
 import os
 from contextlib import contextmanager
@@ -350,11 +368,6 @@ class DecoderLayer(nn.Module):
 
 
         self.layer_idx = layer_idx
-        
-        self.kv_cache_idx = 0
-        for i in range(self.layer_idx):
-            if not config.drop_attn_list[i]:
-                self.kv_cache_idx += 1
 
         self.drop_attn = config.drop_attn_list[layer_idx]
         if self.drop_attn:

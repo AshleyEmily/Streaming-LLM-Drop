@@ -110,6 +110,30 @@ class PruningArguments:
                           'If the file does not exist, it will be created.'},
     )
 
+    # ── Attention variant (applied before calibration scoring) ─────────────────
+    attention_variant: Optional[str] = field(
+        default=None,
+        metadata={"help": "Attention variant to apply before pruning scoring. "
+                          "Choices: streamllm, ntk_rope, gqa. "
+                          "None disables the feature (default attention)."},
+    )
+    streamllm_n_init: int = field(
+        default=128,
+        metadata={"help": "StreamLLM: number of sink (initial) tokens always kept in attention."},
+    )
+    streamllm_n_local: int = field(
+        default=4096,
+        metadata={"help": "StreamLLM: local window size (number of recent tokens kept in attention)."},
+    )
+    ntk_rope_factor: float = field(
+        default=4.0,
+        metadata={"help": "NTK-RoPE: scale factor for dynamic context extension."},
+    )
+    gqa_num_kv_heads: int = field(
+        default=4,
+        metadata={"help": "GQA: target number of key-value heads after merging."},
+    )
+
     # 🔍 For gate-remapping
     pruned_model_path: Optional[str] = field(
         default=None,

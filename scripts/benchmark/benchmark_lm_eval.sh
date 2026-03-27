@@ -32,7 +32,7 @@ do
             for ((i=0; i<$num_tasks; i++)); do
                 CUDA_VISIBLE_DEVICES=$GPUs accelerate launch --main_process_port $port  -m lm_eval \
                     --model hf \
-                    --model_args pretrained=./${model_name}_model,trust_remote_code=True,dtype="bfloat16" \
+                    --model_args pretrained=./${model_name}_model,trust_remote_code=True,dtype="float16" \
                     --tasks ${tasks[$i]} \
                     --num_fewshot ${num_fewshots[$i]} \
                     --batch_size 1 \

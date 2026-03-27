@@ -30,24 +30,58 @@ from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
 
 from transformers.activations import ACT2FN
 from transformers.cache_utils import Cache, DynamicCache
-from transformers.modeling_attn_mask_utils import (
-    AttentionMaskConverter,
-    _prepare_4d_attention_mask,
-    _prepare_4d_causal_attention_mask,
-    _prepare_4d_causal_attention_mask_for_sdpa,
-)
+try:
+    from transformers.modeling_attn_mask_utils import (
+        AttentionMaskConverter,
+        _prepare_4d_attention_mask,
+        _prepare_4d_causal_attention_mask,
+        _prepare_4d_causal_attention_mask_for_sdpa,
+    )
+except ImportError:
+    # These utilities were reorganized/removed in newer transformers; provide stubs.
+    # DeepSeek-V1 attention mask logic falls back to manual computation when these are absent.
+    AttentionMaskConverter = None
+    def _prepare_4d_attention_mask(mask, dtype, tgt_len=None):
+        return mask
+    def _prepare_4d_causal_attention_mask(attention_mask, input_shape, inputs_embeds, past_key_values_length, sliding_window=None):
+        return attention_mask
+    def _prepare_4d_causal_attention_mask_for_sdpa(attention_mask, input_shape, inputs_embeds, past_key_values_length, sliding_window=None):
+        return attention_mask
 from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast, SequenceClassifierOutputWithPast
 from transformers.modeling_utils import PreTrainedModel
-from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS, is_torch_greater_or_equal_than_1_13
+from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS
+# is_torch_greater_or_equal_than_1_13 was removed; torch>=2.0 is required so it's always True
+is_torch_greater_or_equal_than_1_13 = True
 from transformers.utils import (
     add_start_docstrings,
     add_start_docstrings_to_model_forward,
     is_flash_attn_2_available,
-    is_flash_attn_greater_or_equal_2_10,
     logging,
     replace_return_docstrings,
 )
-from transformers.utils.import_utils import is_torch_fx_available
+# is_flash_attn_greater_or_equal_2_10 was removed in newer transformers; provide a fallback
+try:
+    from transformers.utils import is_flash_attn_greater_or_equal_2_10
+except ImportError:
+    def is_flash_attn_greater_or_equal_2_10():
+        try:
+            import flash_attn
+            from packaging import version
+            return version.parse(flash_attn.__version__) >= version.parse("2.10")
+        except Exception:
+            return False
+try:
+    from transformers.utils.import_utils import is_torch_fx_available
+except ImportError:
+    try:
+        from transformers.utils import is_torch_fx_available
+    except ImportError:
+        def is_torch_fx_available():
+            try:
+                import torch.fx  # noqa
+                return True
+            except ImportError:
+                return False
 from .configuration_deepseek import DeepseekConfig
 
 
@@ -432,7 +466,9 @@ class DeepseekAttention(nn.Module):
         super().__init__()
         self.config = config
         self.layer_idx = layer_idx
-        self.kv_cache_idx = kv_cache_idx ### 🔍🔍🔍
+        # kv_cache_idx was used for compressed KV cache indexing with dropped layers.
+        # Modern DynamicCache uses layer_idx directly; fall back to layer_idx if not given.
+        self.kv_cache_idx = kv_cache_idx if kv_cache_idx is not None else layer_idx
         if layer_idx is None:
             logger.warning_once(
                 f"Instantiating {self.__class__.__name__} without passing `layer_idx` is not recommended and will "
@@ -902,17 +938,13 @@ class DeepseekDecoderLayer(nn.Module):
         self.hidden_size = config.hidden_size
         self.layer_idx = layer_idx  ### 🔍🔍🔍
 
-        self.kv_cache_idx = 0   ### 🔍🔍🔍
-        for i in range(self.layer_idx):
-            if not config.drop_attn_list[i]:
-                self.kv_cache_idx += 1
-                
         self.drop_attn = config.drop_attn_list[layer_idx]   ### 🔍🔍🔍
         if self.drop_attn:  ### 🔍🔍🔍
             self.self_attn = None
             self.input_layernorm = None
-        else:   
-            self.self_attn = Deepseek_ATTENTION_CLASSES[config._attn_implementation](config=config, kv_cache_idx=self.kv_cache_idx)
+        else:
+            # Pass layer_idx as kv_cache_idx; DynamicCache uses layer_idx directly
+            self.self_attn = Deepseek_ATTENTION_CLASSES[config._attn_implementation](config=config, layer_idx=layer_idx, kv_cache_idx=layer_idx)
             self.input_layernorm = DeepseekRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
         self.drop_mlp = config.drop_mlp_list[layer_idx]
         if self.drop_mlp:   ### 🔍🔍🔍

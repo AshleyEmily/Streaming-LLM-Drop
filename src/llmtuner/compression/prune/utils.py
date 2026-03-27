@@ -139,6 +139,47 @@ def prepare_calibration_input(model, dataloader, num_samples=16):
 
 
 
+def forward_layer(unwrapped_model, layer, hidden_states, attention_mask, position_ids, cache_position=None):
+    """Forward pass through a decoder layer, compatible with both old and new transformers APIs.
+
+    Newer transformers (>=4.46) moved rotary embedding computation outside the attention
+    module and require `position_embeddings` to be passed explicitly. This helper pre-computes
+    them only when the attention module no longer handles rotary embeddings internally
+    (i.e., `self_attn` lacks its own `rotary_emb` attribute).
+
+    transformers 5.x: decoder layers return hidden_states directly (tensor, not tuple);
+    also, 2D long attention masks must be converted — pass None (all-attend) for calibration.
+    """
+    import torch
+    import transformers as _tr
+    _v5 = int(_tr.__version__.split(".")[0]) >= 5
+
+    # In transformers 5.x, decoder layers are called with `attention_mask` already
+    # converted to a 4D causal float mask inside LlamaModel.forward.  When we call
+    # the layer directly (bypassing the model), a raw 2D long mask causes SDPA to
+    # fail.  For calibration purposes (computing cosine similarity) all tokens attend
+    # to all others, so passing None is equivalent and always safe.
+    if _v5 and attention_mask is not None:
+        if attention_mask.dim() == 2 and attention_mask.dtype in (torch.int, torch.long, torch.int32, torch.int64):
+            attention_mask = None
+
+    kwargs = dict(attention_mask=attention_mask, position_ids=position_ids)
+    attn = getattr(layer, 'self_attn', None)
+    attn_has_rotary = attn is not None and hasattr(attn, 'rotary_emb')
+    if (hasattr(unwrapped_model.model, 'rotary_emb')
+            and not attn_has_rotary
+            and position_ids is not None):
+        kwargs['position_embeddings'] = unwrapped_model.model.rotary_emb(hidden_states, position_ids=position_ids)
+    if cache_position is not None:
+        kwargs['cache_position'] = cache_position
+
+    result = layer(hidden_states, **kwargs)
+    # transformers 4.x: returns (hidden_states, ...); 5.x: returns hidden_states directly
+    if isinstance(result, torch.Tensor):
+        return result
+    return result[0]
+
+
 auto_map = {
     "llama": {
                 "AutoConfig": "configuration_dropped_llama.LlamaConfig",

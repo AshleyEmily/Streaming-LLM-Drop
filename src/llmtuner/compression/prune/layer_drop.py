@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from .io import create_dir
-from .utils import print_gpu_memory, prepare_calibration_input, auto_map, CUSTOM_FILE
+from .utils import print_gpu_memory, prepare_calibration_input, auto_map, CUSTOM_FILE, forward_layer
 from .wrapper import HiddenStatesRecordWrapper
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
     if cache_file is not None and os.path.exists(cache_file):
         # use cached file
         accelerator.print(f"Loading cached model from {cache_file}")
-        similarities = torch.load(cache_file, map_location=device)
+        similarities = torch.load(cache_file, map_location=device, weights_only=True)
 
     else:
         # calculate similarities
@@ -95,35 +95,42 @@ def get_layer_similarities(model, dataloader: DataLoader, accelerator: Accelerat
                 handles.append(module_pre_norm.register_forward_hook(record_module_pre_norm_states_hook))
                 handles.append(module.register_forward_hook(record_module_states_hook))
                 for j in range(num_samples):
-                    if getattr(unwrapped_model.config, "model_type", None) == "llama":
-                        outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j], cache_position=cache_position[j])[0]
-                    else:
-                        outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j])[0]
+                    _cache_pos = cache_position[j] if getattr(unwrapped_model.config, "model_type", None) == "llama" else None
+                    outputs[j] = forward_layer(unwrapped_model, layer, inputs[j], attention_mask[j], position_ids[j], cache_position=_cache_pos)
                 for handle in handles:
                     handle.remove()
                 
                 dtype = torch.float32
 
+                # 🔍 Calculate similarity per-sample (avoids OOM from bulk cat at long cutoff_len)
+                # wrapped_module_pre_norm records only input (drop_norm=True) or only output
+                # (drop_norm=False), so the two branches iterate different attribute pairs.
+                cos_sim = torch.tensor(0.0, device=device)
                 if drop_norm:
-                    input_hidden_states = torch.cat(wrapped_module_pre_norm.input_hidden_states, dim=0).to(dtype).to(device)
-                    output_hidden_states = input_hidden_states + torch.cat(wrapped_module.output_hidden_states, dim=0).to(dtype).to(device)
+                    n_samples = len(wrapped_module_pre_norm.input_hidden_states)
+                    for inp_pre, out_mod in zip(
+                            wrapped_module_pre_norm.input_hidden_states,
+                            wrapped_module.output_hidden_states):
+                        inp = inp_pre.to(dtype).to(device)
+                        out = inp + out_mod.to(dtype).to(device)
+                        cos_sim += F.cosine_similarity(inp, out, dim=-1).mean()
                 else:
-                    input_hidden_states = torch.cat(wrapped_module_pre_norm.output_hidden_states, dim=0).to(dtype).to(device)
-                    output_hidden_states = torch.cat(wrapped_module.output_hidden_states, dim=0).to(dtype).to(device)
-
-                # 🔍 Calculate similarity (output+input due to residual connection)
-                cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
-                cos_sim = cos_sim.mean()
+                    n_samples = len(wrapped_module_pre_norm.output_hidden_states)
+                    for inp_mod, out_mod in zip(
+                            wrapped_module_pre_norm.output_hidden_states,
+                            wrapped_module.output_hidden_states):
+                        inp = inp_mod.to(dtype).to(device)
+                        out = out_mod.to(dtype).to(device)
+                        cos_sim += F.cosine_similarity(inp, out, dim=-1).mean()
+                cos_sim /= n_samples
                 cos_sim = accelerator.reduce(cos_sim, reduction="mean")  # 🔍 All reduce across devices
                 accelerator.print(f'layer {i} similarity: {cos_sim.item()}')
                 similarities[i] = cos_sim
                 
             else:
                 for j in range(num_samples):
-                    if getattr(unwrapped_model.config, "model_type", None) == "llama":
-                        outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j], cache_position=cache_position[j])[0]
-                    else:
-                        outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j])[0]
+                    _cache_pos = cache_position[j] if getattr(unwrapped_model.config, "model_type", None) == "llama" else None
+                    outputs[j] = forward_layer(unwrapped_model, layer, inputs[j], attention_mask[j], position_ids[j], cache_position=_cache_pos)
 
             # Update inputs & outputs
             inputs, outputs = outputs, inputs

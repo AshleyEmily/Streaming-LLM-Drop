@@ -1,0 +1,486 @@
+========================================
+  Job        : 27766
+  Node       : cs002
+  Method     : layer_drop
+  Model      : mistralai/Mistral-7B-v0.1
+  Output     : ../results_prune/mistral-base-layer_drop_attn-discrete-drop8/checkpoint
+========================================
+
+[1/3] Calibration + drop decision...
+03/23/2026 17:32:01 - INFO - llmtuner.hparams.parser - Process rank: -1, device: cuda:0, n_gpu: 1
+  distributed training: False, compute dtype: torch.float16
+03/23/2026 17:32:01 - INFO - llmtuner.hparams.parser - Training/evaluation parameters Seq2SeqTrainingArguments(
+accelerator_config={'split_batches': False, 'dispatch_batches': None, 'even_batches': True, 'use_seedable_sampler': True, 'non_blocking': False, 'gradient_accumulation_kwargs': None, 'use_configured_state': False},
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+average_tokens_across_devices=True,
+batch_eval_metrics=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=False,
+do_predict=False,
+do_train=False,
+enable_jit_checkpoint=False,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_do_concat_batches=True,
+eval_on_start=False,
+eval_steps=None,
+eval_strategy=IntervalStrategy.NO,
+eval_use_gather_object=False,
+fp16=True,
+fp16_full_eval=False,
+fsdp=[],
+fsdp_config={'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False},
+full_determinism=False,
+generation_config=None,
+generation_max_length=None,
+generation_num_beams=None,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+gradient_checkpointing_kwargs=None,
+greater_is_better=None,
+hub_always_push=False,
+hub_model_id=None,
+hub_private_repo=None,
+hub_revision=None,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_for_metrics=[],
+include_num_input_tokens_seen=no,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=5e-05,
+length_column_name=length,
+liger_kernel_config=None,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=None,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=10,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_kwargs=None,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+neftune_noise_alpha=None,
+num_train_epochs=3.0,
+optim=OptimizerNames.ADAMW_TORCH_FUSED,
+optim_args=None,
+optim_target_modules=None,
+output_dir=../results_prune/mistral-base-layer_drop_attn-discrete-drop8,
+parallelism_config=None,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=8,
+predict_with_generate=False,
+prediction_loss_only=False,
+project=huggingface,
+push_to_hub=False,
+remove_unused_columns=True,
+report_to=[],
+restore_callback_states_from_checkpoint=False,
+resume_from_checkpoint=None,
+run_name=None,
+save_on_each_node=False,
+save_only_model=False,
+save_steps=500,
+save_strategy=SaveStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+sortish_sampler=False,
+tf32=None,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torch_empty_cache_steps=None,
+trackio_space_id=trackio,
+train_sampling_strategy=random,
+use_cache=False,
+use_cpu=False,
+use_liger_kernel=False,
+warmup_ratio=None,
+warmup_steps=0,
+weight_decay=0.0,
+)
+Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda
+
+Mixed precision type: no
+
+Pruning Args: PruningArguments(prune_seed=42, prune_method='layer_drop', prune_model_save_path='../results_prune/mistral-base-layer_drop_attn-discrete-drop8/checkpoint', n_calibration_samples=256, prune_data_type='pt', sparsity_ratio=0.5, sparsity_type='unstructured', use_variant=False, level='expert', has_sparse=True, do_permute=True, use_svd=True, top_scores=True, expert_drop_method='layerwise_pruning', r=4, layer_drop_method='discrete', block_drop_method='discrete', drop_n=8, layer_drop_norm=True, target_layer='attn', only_update_config=False, similarity_cache_file='../results_prune/cache/mistral-base-layer_drop_attn-c4_val-256samples.pt', attention_variant=None, streamllm_n_init=128, streamllm_n_local=4096, ntk_rope_factor=4.0, gqa_num_kv_heads=4, pruned_model_path=None)
+Model Args: ModelArguments(model_name_or_path='mistralai/Mistral-7B-v0.1', adapter_name_or_path=None, cache_dir=None, use_fast_tokenizer=False, resize_vocab=False, split_special_tokens=False, model_revision='main', quantization_bit=None, quantization_type='nf4', double_quantization=True, rope_scaling=None, flash_attn=False, shift_attn=False, use_unsloth=False, disable_gradient_checkpointing=False, upcast_layernorm=False, upcast_lmhead_output=False, hf_hub_token=None, ms_hub_token=None, export_dir=None, export_size=1, export_quantization_bit=None, export_quantization_dataset=None, export_quantization_nsamples=128, export_quantization_maxlen=1024, export_legacy_format=False, export_hub_model_id=None, print_param_status=False, autogptq=False)
+MistralConfig {
+  "architectures": [
+    "MistralForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 32768,
+  "model_type": "mistral",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pad_token_id": null,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 10000.0,
+    "rope_type": "default"
+  },
+  "sliding_window": 4096,
+  "tie_word_embeddings": false,
+  "transformers_version": "5.3.0",
+  "use_cache": false,
+  "vocab_size": 32000
+}
+
+03/23/2026 17:32:04 - INFO - llmtuner.model.adapter - Adapter is not found at evaluation, load the base model.
+03/23/2026 17:32:04 - INFO - llmtuner.model.loader - trainable params: 0 || all params: 7241732096 || trainable%: 0.0000
+03/23/2026 17:32:04 - INFO - llmtuner.model.loader - This IS expected that the trainable params is 0 if you are using model for inference only.
+03/23/2026 17:32:04 - INFO - llmtuner.data.template - Add pad token: </s>
+03/23/2026 17:32:04 - INFO - llmtuner.data.loader - Loading dataset c4_val.json...
+03/23/2026 17:32:04 - WARNING - llmtuner.data.utils - Checksum failed: missing SHA-1 hash value in dataset_info.json.
+input_ids:
+[9347, 3282, 298, 8986, 567, 2796, 1951, 298, 25758, 5878, 28809, 28713, 1760, 298, 16223, 509, 28723, 21830, 278, 271, 306, 551, 652, 19466, 28748, 9660, 28723, 13, 11491, 578, 264, 13801, 13480, 6136, 297, 418, 806, 28708, 28808, 13, 28758, 644, 971, 3427, 28725, 9773, 442, 707, 799, 1524, 1221, 1478, 865, 579, 6317, 574, 7450, 1250, 28725, 562, 378, 659, 835, 750, 12598, 369, 905, 693, 1587, 6789, 2822, 3427, 506, 1873, 7432, 3864, 304, 7394, 6266, 821, 799, 905, 28723, 415, 1526, 3154, 349, 1215, 13473, 304, 1012, 3235, 659, 298, 347, 5038, 459, 865, 297, 8853, 1063, 442, 707, 624, 1834, 562, 297, 544, 2572, 5020, 28723, 315, 15564, 276, 7762, 6136, 659, 750, 6740, 298, 11711, 304, 2231, 776, 272, 1103, 4466, 354, 3637, 298, 2822, 1524, 28725, 3427, 442, 9773, 28723, 13, 28767, 315, 15564, 276, 1577, 3528, 8902, 1002, 356, 264, 1486, 2184, 302, 5679, 354, 9432, 28725, 356, 272, 4045, 302, 10880, 304, 356, 6818, 272, 3659, 5701, 354, 3376, 298, 2822, 28725, 2231, 304, 3555, 3427, 28723, 13649, 3411, 298, 1372, 11382, 28725, 390, 1162, 390, 264, 27729, 4466, 28725, 690, 622, 1388, 1753, 544, 574, 954, 267, 7533, 594, 304, 622, 1038, 368, 264, 2225, 263, 28725, 492, 3857, 1236, 28723, 17504, 3427, 1055, 25182, 349, 459, 776, 354, 7450, 15079, 304, 18714, 28725, 562, 2940, 298, 6488, 8812, 356, 8575, 304, 1862, 2943, 4370, 28725, 378, 541, 835, 347, 3214, 582, 390, 264, 1215, 3116, 522, 304, 11499, 288, 7585, 28723, 1387, 349, 264, 2611, 2079, 455, 3014, 7373, 623, 353, 6264, 1106, 2405, 3427, 6709, 28723, 13, 28767, 8784, 28725, 14900, 865, 297, 8853, 1063, 349, 459, 2066, 304, 1312, 459, 3376, 3208, 298, 347, 7583, 28725, 624, 3208, 298, 347, 438, 2429, 5038, 297, 624, 13801, 1524, 442, 272, 799, 28723, 1824, 349, 4892, 349, 298, 1388, 272, 549, 21614, 395, 272, 1103, 420, 19099, 28723, 1387, 349, 708, 3595, 2843, 767, 667, 1548, 298, 1149, 5168, 2424, 28723, 415, 4261, 349, 356, 28725, 298, 1950, 264, 9773, 304, 3427, 5181, 354, 544, 3595, 4938, 304, 319, 14930, 28723, 28737, 15564, 276, 7762, 6136, 20566, 438, 264, 5024, 12910, 354, 4154, 3567, 297, 272, 1834, 302, 7572, 288, 28725, 8307, 21015, 28725, 14940, 491, 304, 4118, 17937, 28723, 13, 28767, 1682, 10880, 302, 272, 6302, 460, 6708, 297, 14900, 28725, 17487, 304, 9432, 2038, 8776, 28723, 415, 1140, 5817, 22834, 494, 2020, 298, 11711, 272, 2928, 369, 3427, 349, 354, 624, 304, 544, 28723, 2326, 272, 624, 28733, 532, 28733, 538, 4501, 3857, 1236, 28725, 3637, 541, 2727, 396, 3475, 444, 392, 18086, 8391, 282, 6727, 349, 10535, 356, 5168, 304, 13801, 28723, 1263, 456, 28725, 5430, 4370, 460, 2170, 2458, 1012, 1664, 3370, 970, 1430, 5716, 349, 15863, 298, 14092, 28723, 1014, 18938, 1359, 10617, 741, 302, 272, 21561, 10880, 304, 2225, 404, 302, 813, 2990, 304, 5298, 28723, 1682, 3567, 1368, 22620, 272, 9932, 5537, 28725, 19410, 304, 5168, 21368, 28723, 11773, 15508, 707, 2363, 349, 7998, 298, 6619, 19225, 2288, 297, 544, 3252, 1468, 302, 272, 7585, 28725, 2490, 4397, 304, 25030, 352, 28723, 13, 28767, 661, 349, 272, 865, 13801, 13480, 1140, 5817, 297, 418, 806, 28708, 690, 659, 750, 544, 9752, 2533, 486, 7929, 1138, 28741, 20653, 28723, 415, 6302, 349, 10252, 298, 2231, 680, 8812, 354, 272, 17962, 1923, 404, 28725, 10611, 304, 21895, 28723, 1791, 481, 1438, 442, 354, 707, 23681, 28725, 1601, 1933, 298, 3754, 28705, 28774, 28734, 28740, 28782, 28734, 28770, 28781, 28787, 28781, 28784, 707, 727, 28723, 13, 28737, 15564, 276, 1577, 3528, 8902, 1002, 356, 264, 1486, 2184, 302, 5679, 354, 9432, 28725, 356, 272, 4045, 302, 10880, 304, 356, 6818, 272, 3659, 5701, 354, 3376, 298, 2822, 28725, 2231, 304, 3555, 3427, 28723, 13649, 3411, 298, 1372, 11382, 28725, 390, 1162, 390, 264, 27729, 4466, 28725, 690, 622, 1388, 1753, 544, 574, 954, 267, 7533, 594, 304, 622, 1038, 368, 264, 2225, 263, 28725, 492, 3857, 1236, 28723, 17504, 3427, 1055, 25182, 349, 459, 776, 354, 7450, 15079, 304, 18714, 28725, 562, 2940, 298, 6488, 8812, 356, 8575, 304, 1862, 2943, 4370, 28725, 378, 541, 835, 347, 3214, 582, 390, 264, 1215, 3116, 522, 304, 11499, 288, 7585, 28723, 1387, 349, 264, 2611, 2079, 455, 3014, 7373, 623, 353, 6264, 1106, 2405, 3427, 6709, 28723, 13, 28738, 19761, 28725, 14900, 865, 297, 8853, 1063, 349, 459, 2066, 304, 1312, 459, 3376, 3208, 298, 347, 7583, 28725, 624, 3208, 298, 347, 438, 2429, 5038, 297, 624, 13801, 1524, 442, 272, 799, 28723, 1824, 349, 4892, 349, 298, 1388, 272, 549, 21614, 395, 272, 1103, 420, 19099, 28723, 1387, 349, 708, 3595, 2843, 767, 667, 1548, 298, 1149, 5168, 2424, 28723, 415, 4261, 349, 356, 28725, 298, 1950, 264, 9773, 304, 3427, 5181, 354, 544, 3595, 4938, 304, 319, 14930, 28723, 28737, 15564, 276, 7762, 6136, 20566, 438, 264, 5024, 12910, 354, 4154, 3567, 297, 272, 1834, 302, 7572, 288, 28725, 8307, 21015, 28725, 14940, 491, 304, 4118, 17937, 28723, 13, 2595, 10880, 302, 272, 6302, 460, 6708, 297, 14900, 28725, 17487, 304, 9432, 2038, 8776, 28723, 415, 1140, 5817, 22834, 494, 2020, 298, 11711, 272, 2928, 369, 3427, 349, 354, 624, 304, 544, 28723, 2326, 272, 624, 28733, 532, 28733, 538, 4501, 3857, 1236, 28725, 3637, 541, 2727, 396, 3475, 444, 392, 18086, 8391, 282, 6727, 349, 10535, 356, 5168, 304, 13801, 28723, 1263, 456, 28725, 5430, 4370, 460, 2170, 2458, 1012, 1664, 3370, 970, 1430, 5716, 349, 15863, 298, 14092, 28723, 1014, 18938, 1359, 10617, 741, 302, 272, 21561, 10880, 304, 2225, 404, 302, 813, 2990, 304, 5298, 28723, 1682, 3567, 1368, 22620, 272, 9932, 5537, 28725, 19410, 304, 5168, 21368, 28723, 11773, 15508, 707, 2363, 349, 7998, 298, 6619, 19225, 2288, 297, 544, 3252, 1468, 302, 272, 7585, 28725, 2490, 4397, 304, 25030, 352, 28723, 13, 1313, 349, 272, 865, 13801, 13480, 1140, 5817, 297, 418, 806, 28708, 690, 659, 750, 544, 9752, 2533, 486, 7929, 1138, 28741, 20653, 28723, 415, 6302, 349, 10252, 298, 2231, 680, 8812, 354, 272, 17962, 1923, 404, 28725, 10611, 304, 21895, 28723, 1791, 481, 1438, 442, 354, 707, 23681, 28725, 1601, 1933, 298, 3754, 28705, 28774, 28734, 28740, 28782, 28734, 28770, 28781, 28787, 28781, 28784, 707, 727, 28723, 13, 28759, 806, 28708, 9261, 795, 418, 806, 28708, 3805, 6114, 5836, 349, 1055, 3822, 297, 1712, 16425, 28723, 351, 28740, 28806, 28725, 351, 28740, 24244, 28705, 28740, 28734, 28770, 28760, 28806, 28725, 28740, 28734, 28770, 28760, 28733, 304, 28705, 28750, 28734, 28740, 842, 401, 492, 2819, 349, 477, 28705, 29652, 28740, 28734, 28723, 28734, 28734, 298, 28705, 29652, 28782, 28734, 28723, 28734, 28734, 477, 28705, 28770, 8251, 298, 28705, 28770, 28734, 3535, 28723, 661, 349, 334, 17167, 11949, 6114, 28723, 2326, 7345, 5514, 28723, 12069, 1182, 614, 272, 2372, 307, 2111, 272, 19368, 513, 707, 28723, 2, 415, 7442, 28710, 488, 8618, 302, 12338, 403, 8723, 297, 28705, 28740, 28774, 28782, 28787, 390, 264, 981, 20763, 12338, 28838, 4274, 1269, 582, 302, 28705, 28750, 28734, 20826, 28723, 560, 28705, 28740, 28774, 28784, 28734, 28725, 272, 907, 989, 2173, 28733, 1536, 4758, 9164, 654, 15866, 28723, 4577, 369, 727, 28725, 272, 11344, 659, 10039, 395, 272, 3805, 298, 396, 11344, 369, 9393, 346, 7031, 272, 11305, 28725, 8689, 28725, 304, 12085, 302, 272, 3805, 302, 7442, 28710, 488, 304, 4953, 14013, 25889, 28725, 7501, 7498, 288, 304, 3618, 6661, 3345, 298, 264, 2970, 21623, 2698, 302, 10870, 28705, 28740, 28787, 7930, 6052, 28723, 13, 4957, 368, 506, 767, 378, 4347, 298, 5175, 813, 11344, 28804, 16694, 910, 368, 541, 7656, 272, 382, 8268, 9734, 490, 1236, 28723, 2, 320, 28169, 324, 5945, 5902, 28713, 1259, 3327, 1178, 369, 349, 4892, 354, 272, 8598, 6032, 302, 938, 28725, 354, 2757, 2955, 28725, 14501, 28725, 3754, 1871, 28725, 1178, 3236, 354, 7501, 11282, 304, 3345, 298, 368, 390, 264, 6346, 304, 12139, 5202, 298, 320, 28169, 324, 5945, 28742, 28713, 4076, 304, 6290, 28723, 415, 1178, 349, 12469, 11464, 5090, 477, 272, 12920, 6105, 272, 1178, 10864, 28723, 13, 28740, 28731, 1263, 3754, 288, 1560, 13776, 304, 5024, 5688, 304, 652, 20559, 354, 2757, 297, 6346, 2372, 5202, 9760, 28723, 13, 28750, 28731, 1263, 7080, 320, 28169, 324, 5945, 28742, 28713, 4076, 304, 3345, 28723, 560, 1222, 272, 8807, 16837, 6948, 369, 272, 17560, 4579, 5556, 23841, 28742, 28713, 4681, 4241, 15134, 28725, 1259, 15134, 4579, 907, 347, 7365, 486, 320, 28169, 324, 5945, 28723, 13, 28770, 28731, 1263, 9457, 12139, 2078, 356, 320, 28169, 324, 5945, 28742, 28713, 6290, 28725, 304, 354, 6548, 1077, 304, 10423, 320, 28169, 324, 5945, 28742, 28713, 4076, 304, 3345, 28723, 13, 28781, 28731, 1263, 10839, 575, 272, 4495, 304, 26405, 5202, 298, 264, 5001, 1444, 320, 28169, 324, 5945, 304, 272, 1338, 4636, 1178, 349, 1250, 16244, 28723, 13, 28782, 28731, 1263, 5283, 272, 8296, 302, 8807, 16837, 28723, 13, 28738, 28169, 324, 5945, 349, 10252, 298, 3344, 272, 4892, 10067, 304, 6443, 1249, 10582, 298, 5297, 521, 26646, 2735, 298, 574, 3327, 1178, 28723, 2957, 10582, 3024, 1413, 27591, 5562, 28725, 2735, 2602, 28725, 12888, 10298, 302, 2188, 4495, 304, 12317, 288, 272, 7896, 13173, 297, 9457, 3327, 1178, 28723, 13, 28738, 28169, 324, 5945, 993, 704, 5336, 574, 3327, 1178, 298, 799, 4799, 2373, 320, 28169, 324, 5945, 5926, 304, 298, 1259, 4008, 8209, 693, 460, 23243, 298, 1759, 272, 1178, 356, 320, 28169, 324, 5945, 28742, 28713, 15665, 28723, 13, 28738, 28169, 324, 5945, 993, 5998, 574, 3327, 1178, 3536, 272, 2939, 970, 272, 1178, 349, 1250, 16244, 28723, 320, 28169, 324, 5945, 349, 10252, 298, 2492, 1864, 369, 1259, 5998, 349, 4670, 4771, 298, 272, 8807, 16837, 304, 369, 574, 1178, 349, 6582, 1999, 4443, 12907, 302, 272, 2970, 21623, 4723, 28723, 13, 28740, 28731, 19500, 320, 28169, 324, 5945, 298, 8735, 513, 478, 460, 9457, 3327, 1178, 684, 368, 28723, 995, 835, 506, 272, 1103, 298, 5556, 264, 3082, 302, 456, 1178, 297, 7808, 1070, 1221, 28723, 13, 28750, 28731, 19500, 354, 272, 21750, 296, 442, 26187, 302, 3327, 1178, 5202, 298, 368, 369, 349, 297, 11192, 28725, 22376, 28725, 16390, 442, 575, 5218, 28723, 13, 12069, 5039, 369, 272, 1862, 8807, 16837, 993, 808, 9853, 4870, 4331, 354, 9457, 3327, 1178, 304, 574, 4495, 390, 264, 1178, 3817, 28723, 2, 11512, 403, 1419, 15533, 2131, 272, 10468, 304, 403, 6576, 1106, 7715, 582, 486, 264, 1179, 4545, 283, 12844, 28723, 2584, 11532, 3807, 752, 12991, 272, 10501, 354, 559, 7162, 28725, 562, 553, 708, 6576, 28723, 1684, 11684, 1988, 2526, 354, 559, 28725, 401, 411, 1510, 10440, 346, 1992, 28717, 441, 2056, 272, 18781, 297, 28725, 304, 11512, 349, 1055, 395, 592, 28723, 985, 349, 264, 12882, 26344, 616, 26274, 28725, 390, 544, 18631, 497, 460, 28725, 304, 1484, 14298, 298, 1038, 592, 6458, 28723, 816, 506, 750, 4031, 293, 4218, 8557, 486, 910, 4377, 630, 349, 23729, 356, 395, 559, 4154, 28723, 985, 13468, 298, 1156, 395, 559, 27560, 27139, 28725, 277, 12370, 291, 395, 592, 28725, 304, 2822, 633, 1722, 28723, 13, 2198, 11512, 1610, 1238, 28725, 478, 622, 3688, 298, 1032, 910, 559, 13355, 10077, 4858, 304, 4098, 813, 2841, 9235, 395, 559, 8504, 356, 11690, 567, 18351, 28723, 13, 1551, 5580, 298, 8799, 11512, 28725, 1220, 684, 401, 411, 1510, 10440, 346, 1992, 28717, 441, 28742, 28713, 8296, 28725, 442, 949, 380, 298, 559, 22116, 1656, 28725, 6046, 1236, 28723, 13, 2086, 11512, 28742, 28713, 18805, 1312, 297, 813, 27560, 1656, 486, 12869, 272, 659, 407, 357, 422, 28769, 11394, 28757, 11551, 28723, 2, 816, 1658, 272, 464, 896, 1086, 28742, 852, 297, 1353, 9490, 28808, 13, 28741, 15943, 6434, 560, 7002, 734, 460, 5619, 1368, 28808, 13, 3381, 368, 506, 264, 2996, 21487, 298, 1611, 1488, 386, 1308, 28725, 368, 993, 1460, 378, 486, 1413, 272, 464, 1163, 1339, 28742, 3624, 28723, 10339, 297, 2273, 369, 2424, 368, 1704, 297, 272, 464, 1163, 1339, 28742, 622, 2727, 264, 13089, 744, 302, 456, 6073, 28723, 1047, 368, 506, 264, 680, 3327, 2996, 369, 368, 511, 459, 947, 4775, 28725, 368, 993, 4927, 528, 574, 2996, 3519, 28723, 13, 11159, 2996, 622, 347, 10239, 2373, 28705, 28781, 28783, 3316, 28723, 1047, 368, 4927, 574, 2996, 28725, 272, 4372, 622, 347, 877, 2384, 298, 368, 28723, 1047, 368, 1704, 574, 2996, 297, 272, 25493, 28725]
+inputs:
+Media friends to attend & cover event to affirm nation’s support to jawans.Organisor thru their newspapers/media.
+Finally a performing arts College in Noida!
+Learning music, dance or any other art formnot only soothes your inner being, but it has also been proven that people who systematically learn music have better strategizing and planning skills than other people. The world today is very competitive and every individual has to be active not only in academics or any one field but in all possible areas. Ishaan Music College has been established to promote and create just the right environment for anyone to learn art, music or dance.
+> IshaanCollege concentrates on a high level of culture for teaching, on the quality of teachers and on creating the perfect opportunity for everyone to learn, create and enjoy music. Very easy to follow instructions, as well as a supportive environment, which will take away all your apprehensions and will make you a performer,are provided here. Learning music nowadays is not just for inner happiness and discipline, but due to increasing opportunities on television and local live shows, it can also be taken up as a very respectable and rewarding profession. There is a reason whyall major schools compulsorily offer music classes.
+> Today, expertise only in academics is not enough and while not everyone needs to be expert, one needs to be at least active in one performing art or the other. What is necessary is to take the plunge with the right Guru. There is no age bar whatsoever to start learning anything. The effort is on, to develop a dance and music platform for all age groups and genders.Ishaan Music College aims at a professional attitude for training students in the field of Singing, Western Dance, Kathak and various instruments.
+> All teachers of the college are rich in expertise, performances and teaching methodologies. The institute endeavours to promote the message that music is for one and all. With the one-to-one attention provided here, anyone can become an ‘artist’. Equal stress is laid on learning and performing. For this, stage shows are organised every few months where each student is encouraged to participate.The faculty boasts some of the finest teachers and performers of our city and beyond. All students too exhibit the greatest ability, initiative and learning capability. Everyone joining any course is prepared to achieve notable success in all facets of the profession, including performance andeducation.
+> It is the only performing arts institute in Noida which has been allotted land by NOIDA Authority. The college is committed to create more opportunities for the upcoming singers, artists and musicians. To enrol or for any queries, feel free to contact 9015034746 any time.
+IshaanCollege concentrates on a high level of culture for teaching, on the quality of teachers and on creating the perfect opportunity for everyone to learn, create and enjoy music. Very easy to follow instructions, as well as a supportive environment, which will take away all your apprehensions and will make you a performer,are provided here. Learning music nowadays is not just for inner happiness and discipline, but due to increasing opportunities on television and local live shows, it can also be taken up as a very respectable and rewarding profession. There is a reason whyall major schools compulsorily offer music classes.
+Today, expertise only in academics is not enough and while not everyone needs to be expert, one needs to be at least active in one performing art or the other. What is necessary is to take the plunge with the right Guru. There is no age bar whatsoever to start learning anything. The effort is on, to develop a dance and music platform for all age groups and genders.Ishaan Music College aims at a professional attitude for training students in the field of Singing, Western Dance, Kathak and various instruments.
+All teachers of the college are rich in expertise, performances and teaching methodologies. The institute endeavours to promote the message that music is for one and all. With the one-to-one attention provided here, anyone can become an ‘artist’. Equal stress is laid on learning and performing. For this, stage shows are organised every few months where each student is encouraged to participate.The faculty boasts some of the finest teachers and performers of our city and beyond. All students too exhibit the greatest ability, initiative and learning capability. Everyone joining any course is prepared to achieve notable success in all facets of the profession, including performance andeducation.
+It is the only performing arts institute in Noida which has been allotted land by NOIDA Authority. The college is committed to create more opportunities for the upcoming singers, artists and musicians. To enrol or for any queries, feel free to contact 9015034746 any time.
+Noida Greater Noida City Bus Service is now running in three routes. M1+, M1-, 103B+,103B- and 201 . Fare range is from ₹10.00 to ₹50.00 from 3km to 30 km. It is CNG AC Bus. With latest technology.Please avail the service n give the suggestion if any.</s> The Hilliard Division of Police was formed in 1957 as a “Special Police” force made up of 20 volunteers. In 1960, the first two full-time police officers were hired. Since that time, the agency has grown with the City to an agency that proudly serve the residents, businesses, and visitors of the City of Hilliard and Norwich Township, providing policing and community safety services to a geographical area of approximately 17 square miles.
+Do you have what it takes to join our agency? Learn how you can wear the HPD Badge here.</s> Tikkurila collects such personal data that is necessary for the relevant purpose of use, for example names, addresses, contact information, data needed for providing goods and services to you as a customer and feedback related to Tikkurila's products and activities. The data is collected mainly directly from the persons whom the data concerns.
+1) For contacting both consumers and professional customers and their representatives for example in customer service related matters.
+2) For marketing Tikkurila's products and services. In case the applicable legislation requires that the sender shall receive recipient's prior written consent, such consent shall first be obtained by Tikkurila.
+3) For processing feedback given on Tikkurila's activities, and for evaluating and developing Tikkurila's products and services.
+4) For carrying out the rights and obligations related to a contract between Tikkurila and the person whose data is being processed.
+5) For meeting the requirements of applicable legislation.
+Tikkurila is committed to taking the necessary technical and organizational measures to prevent unauthorized access to your personal data. These measures include using encryption methods, access control, controlled administration of user rights and instructing the employees engaged in processing personal data.
+Tikkurila may disclose your personal data to other companies within Tikkurila Group and to such third parties who are authorized to process the data on Tikkurila's behalf.
+Tikkurila may transfer your personal data outside the country where the data is being processed. Tikkurila is committed to making sure that such transfer is allowed according to the applicable legislation and that your data is appropriately protected regardless of the geographical location.
+1) Ask Tikkurila to confirm if we are processing personal data about you. You also have the right to receive a copy of this data in intelligible form.
+2) Ask for the deletion or updating of personal data related to you that is incomplete, unnecessary, incorrect or outdated.
+Please note that the local applicable legislation may set forth additional conditions for processing personal data and your rights as a data subject.</s> Holly was found wandering the streets and was luckily picked up by a good samaratin. Her rescuer scoured the neighborhood for her owner, but had no luck. When nobody came looking for her, Fresno Bully Rescue took the pup in, and Holly is now with us. She is a ridiculously adorable, as all puppies are, and never fails to make us smile. We have been pleasantly surprised by how quickly she is catching on with her training. She loves to play with her foster siblings, cuddle with us, and learn new things.
+As Holly matures, we will continue to see how her personality unfolds and share our special moments with her fans on Twitter & Instagram.
+To apply to adopt Holly, read about Fresno Bully Rescue's requirements, or donate to her vet care, click here.
+View Holly's gallery while in our foster care by searching the hashtag #HollyDobby.</s> We put the 'REAL' back in real estate!
+Arizona Home Inspectors are People too!
+If you have a question relating to home inspections, you may ask it by using the 'Comments' below. Keep in mind that anything you post in the 'Comments' will become a permanent part of this blog. If you have a more personal question that you do not want published, you may email me your question instead.
+Your question will be answered within 48 hours. If you email your question, the answer will be emailed to you. If you post your question in the Comments,
+Total Sample Num: 2593
+Total Used Sample Num: 256
+Max sequence Length: 2048
+Example Data (len = 2048): {'input_ids': [9347, 3282, 298, 8986, 567, 2796, 1951, 298, 25758, 5878, 28809, 28713, 1760, 298, 16223, 509, 28723, 21830, 278, 271, 306, 551, 652, 19466, 28748, 9660, 28723, 13, 11491, 578, 264, 13801, 13480, 6136, 297, 418, 806, 28708, 28808, 13, 28758, 644, 971, 3427, 28725, 9773, 442, 707, 799, 1524, 1221, 1478, 865, 579, 6317, 574, 7450, 1250, 28725, 562, 378, 659, 835, 750, 12598, 369, 905, 693, 1587, 6789, 2822, 3427, 506, 1873, 7432, 3864, 304, 7394, 6266, 821, 799, 905, 28723, 415, 1526, 3154, 349, 1215, 13473, 304, 1012, 3235, 659, 298, 347, 5038, 459, 865, 297, 8853, 1063, 442, 707, 624, 1834, 562, 297, 544, 2572, 5020, 28723, 315, 15564, 276, 7762, 6136, 659, 750, 6740, 298, 11711, 304, 2231, 776, 272, 1103, 4466, 354, 3637, 298, 2822, 1524, 28725, 3427, 442, 9773, 28723, 13, 28767, 315, 15564, 276, 1577, 3528, 8902, 1002, 356, 264, 1486, 2184, 302, 5679, 354, 9432, 28725, 356, 272, 4045, 302, 10880, 304, 356, 6818, 272, 3659, 5701, 354, 3376, 298, 2822, 28725, 2231, 304, 3555, 3427, 28723, 13649, 3411, 298, 1372, 11382, 28725, 390, 1162, 390, 264, 27729, 4466, 28725, 690, 622, 1388, 1753, 544, 574, 954, 267, 7533, 594, 304, 622, 1038, 368, 264, 2225, 263, 28725, 492, 3857, 1236, 28723, 17504, 3427, 1055, 25182, 349, 459, 776, 354, 7450, 15079, 304, 18714, 28725, 562, 2940, 298, 6488, 8812, 356, 8575, 304, 1862, 2943, 4370, 28725, 378, 541, 835, 347, 3214, 582, 390, 264, 1215, 3116, 522, 304, 11499, 288, 7585, 28723, 1387, 349, 264, 2611, 2079, 455, 3014, 7373, 623, 353, 6264, 1106, 2405, 3427, 6709, 28723, 13, 28767, 8784, 28725, 14900, 865, 297, 8853, 1063, 349, 459, 2066, 304, 1312, 459, 3376, 3208, 298, 347, 7583, 28725, 624, 3208, 298, 347, 438, 2429, 5038, 297, 624, 13801, 1524, 442, 272, 799, 28723, 1824, 349, 4892, 349, 298, 1388, 272, 549, 21614, 395, 272, 1103, 420, 19099, 28723, 1387, 349, 708, 3595, 2843, 767, 667, 1548, 298, 1149, 5168, 2424, 28723, 415, 4261, 349, 356, 28725, 298, 1950, 264, 9773, 304, 3427, 5181, 354, 544, 3595, 4938, 304, 319, 14930, 28723, 28737, 15564, 276, 7762, 6136, 20566, 438, 264, 5024, 12910, 354, 4154, 3567, 297, 272, 1834, 302, 7572, 288, 28725, 8307, 21015, 28725, 14940, 491, 304, 4118, 17937, 28723, 13, 28767, 1682, 10880, 302, 272, 6302, 460, 6708, 297, 14900, 28725, 17487, 304, 9432, 2038, 8776, 28723, 415, 1140, 5817, 22834, 494, 2020, 298, 11711, 272, 2928, 369, 3427, 349, 354, 624, 304, 544, 28723, 2326, 272, 624, 28733, 532, 28733, 538, 4501, 3857, 1236, 28725, 3637, 541, 2727, 396, 3475, 444, 392, 18086, 8391, 282, 6727, 349, 10535, 356, 5168, 304, 13801, 28723, 1263, 456, 28725, 5430, 4370, 460, 2170, 2458, 1012, 1664, 3370, 970, 1430, 5716, 349, 15863, 298, 14092, 28723, 1014, 18938, 1359, 10617, 741, 302, 272, 21561, 10880, 304, 2225, 404, 302, 813, 2990, 304, 5298, 28723, 1682, 3567, 1368, 22620, 272, 9932, 5537, 28725, 19410, 304, 5168, 21368, 28723, 11773, 15508, 707, 2363, 349, 7998, 298, 6619, 19225, 2288, 297, 544, 3252, 1468, 302, 272, 7585, 28725, 2490, 4397, 304, 25030, 352, 28723, 13, 28767, 661, 349, 272, 865, 13801, 13480, 1140, 5817, 297, 418, 806, 28708, 690, 659, 750, 544, 9752, 2533, 486, 7929, 1138, 28741, 20653, 28723, 415, 6302, 349, 10252, 298, 2231, 680, 8812, 354, 272, 17962, 1923, 404, 28725, 10611, 304, 21895, 28723, 1791, 481, 1438, 442, 354, 707, 23681, 28725, 1601, 1933, 298, 3754, 28705, 28774, 28734, 28740, 28782, 28734, 28770, 28781, 28787, 28781, 28784, 707, 727, 28723, 13, 28737, 15564, 276, 1577, 3528, 8902, 1002, 356, 264, 1486, 2184, 302, 5679, 354, 9432, 28725, 356, 272, 4045, 302, 10880, 304, 356, 6818, 272, 3659, 5701, 354, 3376, 298, 2822, 28725, 2231, 304, 3555, 3427, 28723, 13649, 3411, 298, 1372, 11382, 28725, 390, 1162, 390, 264, 27729, 4466, 28725, 690, 622, 1388, 1753, 544, 574, 954, 267, 7533, 594, 304, 622, 1038, 368, 264, 2225, 263, 28725, 492, 3857, 1236, 28723, 17504, 3427, 1055, 25182, 349, 459, 776, 354, 7450, 15079, 304, 18714, 28725, 562, 2940, 298, 6488, 8812, 356, 8575, 304, 1862, 2943, 4370, 28725, 378, 541, 835, 347, 3214, 582, 390, 264, 1215, 3116, 522, 304, 11499, 288, 7585, 28723, 1387, 349, 264, 2611, 2079, 455, 3014, 7373, 623, 353, 6264, 1106, 2405, 3427, 6709, 28723, 13, 28738, 19761, 28725, 14900, 865, 297, 8853, 1063, 349, 459, 2066, 304, 1312, 459, 3376, 3208, 298, 347, 7583, 28725, 624, 3208, 298, 347, 438, 2429, 5038, 297, 624, 13801, 1524, 442, 272, 799, 28723, 1824, 349, 4892, 349, 298, 1388, 272, 549, 21614, 395, 272, 1103, 420, 19099, 28723, 1387, 349, 708, 3595, 2843, 767, 667, 1548, 298, 1149, 5168, 2424, 28723, 415, 4261, 349, 356, 28725, 298, 1950, 264, 9773, 304, 3427, 5181, 354, 544, 3595, 4938, 304, 319, 14930, 28723, 28737, 15564, 276, 7762, 6136, 20566, 438, 264, 5024, 12910, 354, 4154, 3567, 297, 272, 1834, 302, 7572, 288, 28725, 8307, 21015, 28725, 14940, 491, 304, 4118, 17937, 28723, 13, 2595, 10880, 302, 272, 6302, 460, 6708, 297, 14900, 28725, 17487, 304, 9432, 2038, 8776, 28723, 415, 1140, 5817, 22834, 494, 2020, 298, 11711, 272, 2928, 369, 3427, 349, 354, 624, 304, 544, 28723, 2326, 272, 624, 28733, 532, 28733, 538, 4501, 3857, 1236, 28725, 3637, 541, 2727, 396, 3475, 444, 392, 18086, 8391, 282, 6727, 349, 10535, 356, 5168, 304, 13801, 28723, 1263, 456, 28725, 5430, 4370, 460, 2170, 2458, 1012, 1664, 3370, 970, 1430, 5716, 349, 15863, 298, 14092, 28723, 1014, 18938, 1359, 10617, 741, 302, 272, 21561, 10880, 304, 2225, 404, 302, 813, 2990, 304, 5298, 28723, 1682, 3567, 1368, 22620, 272, 9932, 5537, 28725, 19410, 304, 5168, 21368, 28723, 11773, 15508, 707, 2363, 349, 7998, 298, 6619, 19225, 2288, 297, 544, 3252, 1468, 302, 272, 7585, 28725, 2490, 4397, 304, 25030, 352, 28723, 13, 1313, 349, 272, 865, 13801, 13480, 1140, 5817, 297, 418, 806, 28708, 690, 659, 750, 544, 9752, 2533, 486, 7929, 1138, 28741, 20653, 28723, 415, 6302, 349, 10252, 298, 2231, 680, 8812, 354, 272, 17962, 1923, 404, 28725, 10611, 304, 21895, 28723, 1791, 481, 1438, 442, 354, 707, 23681, 28725, 1601, 1933, 298, 3754, 28705, 28774, 28734, 28740, 28782, 28734, 28770, 28781, 28787, 28781, 28784, 707, 727, 28723, 13, 28759, 806, 28708, 9261, 795, 418, 806, 28708, 3805, 6114, 5836, 349, 1055, 3822, 297, 1712, 16425, 28723, 351, 28740, 28806, 28725, 351, 28740, 24244, 28705, 28740, 28734, 28770, 28760, 28806, 28725, 28740, 28734, 28770, 28760, 28733, 304, 28705, 28750, 28734, 28740, 842, 401, 492, 2819, 349, 477, 28705, 29652, 28740, 28734, 28723, 28734, 28734, 298, 28705, 29652, 28782, 28734, 28723, 28734, 28734, 477, 28705, 28770, 8251, 298, 28705, 28770, 28734, 3535, 28723, 661, 349, 334, 17167, 11949, 6114, 28723, 2326, 7345, 5514, 28723, 12069, 1182, 614, 272, 2372, 307, 2111, 272, 19368, 513, 707, 28723, 2, 415, 7442, 28710, 488, 8618, 302, 12338, 403, 8723, 297, 28705, 28740, 28774, 28782, 28787, 390, 264, 981, 20763, 12338, 28838, 4274, 1269, 582, 302, 28705, 28750, 28734, 20826, 28723, 560, 28705, 28740, 28774, 28784, 28734, 28725, 272, 907, 989, 2173, 28733, 1536, 4758, 9164, 654, 15866, 28723, 4577, 369, 727, 28725, 272, 11344, 659, 10039, 395, 272, 3805, 298, 396, 11344, 369, 9393, 346, 7031, 272, 11305, 28725, 8689, 28725, 304, 12085, 302, 272, 3805, 302, 7442, 28710, 488, 304, 4953, 14013, 25889, 28725, 7501, 7498, 288, 304, 3618, 6661, 3345, 298, 264, 2970, 21623, 2698, 302, 10870, 28705, 28740, 28787, 7930, 6052, 28723, 13, 4957, 368, 506, 767, 378, 4347, 298, 5175, 813, 11344, 28804, 16694, 910, 368, 541, 7656, 272, 382, 8268, 9734, 490, 1236, 28723, 2, 320, 28169, 324, 5945, 5902, 28713, 1259, 3327, 1178, 369, 349, 4892, 354, 272, 8598, 6032, 302, 938, 28725, 354, 2757, 2955, 28725, 14501, 28725, 3754, 1871, 28725, 1178, 3236, 354, 7501, 11282, 304, 3345, 298, 368, 390, 264, 6346, 304, 12139, 5202, 298, 320, 28169, 324, 5945, 28742, 28713, 4076, 304, 6290, 28723, 415, 1178, 349, 12469, 11464, 5090, 477, 272, 12920, 6105, 272, 1178, 10864, 28723, 13, 28740, 28731, 1263, 3754, 288, 1560, 13776, 304, 5024, 5688, 304, 652, 20559, 354, 2757, 297, 6346, 2372, 5202, 9760, 28723, 13, 28750, 28731, 1263, 7080, 320, 28169, 324, 5945, 28742, 28713, 4076, 304, 3345, 28723, 560, 1222, 272, 8807, 16837, 6948, 369, 272, 17560, 4579, 5556, 23841, 28742, 28713, 4681, 4241, 15134, 28725, 1259, 15134, 4579, 907, 347, 7365, 486, 320, 28169, 324, 5945, 28723, 13, 28770, 28731, 1263, 9457, 12139, 2078, 356, 320, 28169, 324, 5945, 28742, 28713, 6290, 28725, 304, 354, 6548, 1077, 304, 10423, 320, 28169, 324, 5945, 28742, 28713, 4076, 304, 3345, 28723, 13, 28781, 28731, 1263, 10839, 575, 272, 4495, 304, 26405, 5202, 298, 264, 5001, 1444, 320, 28169, 324, 5945, 304, 272, 1338, 4636, 1178, 349, 1250, 16244, 28723, 13, 28782, 28731, 1263, 5283, 272, 8296, 302, 8807, 16837, 28723, 13, 28738, 28169, 324, 5945, 349, 10252, 298, 3344, 272, 4892, 10067, 304, 6443, 1249, 10582, 298, 5297, 521, 26646, 2735, 298, 574, 3327, 1178, 28723, 2957, 10582, 3024, 1413, 27591, 5562, 28725, 2735, 2602, 28725, 12888, 10298, 302, 2188, 4495, 304, 12317, 288, 272, 7896, 13173, 297, 9457, 3327, 1178, 28723, 13, 28738, 28169, 324, 5945, 993, 704, 5336, 574, 3327, 1178, 298, 799, 4799, 2373, 320, 28169, 324, 5945, 5926, 304, 298, 1259, 4008, 8209, 693, 460, 23243, 298, 1759, 272, 1178, 356, 320, 28169, 324, 5945, 28742, 28713, 15665, 28723, 13, 28738, 28169, 324, 5945, 993, 5998, 574, 3327, 1178, 3536, 272, 2939, 970, 272, 1178, 349, 1250, 16244, 28723, 320, 28169, 324, 5945, 349, 10252, 298, 2492, 1864, 369, 1259, 5998, 349, 4670, 4771, 298, 272, 8807, 16837, 304, 369, 574, 1178, 349, 6582, 1999, 4443, 12907, 302, 272, 2970, 21623, 4723, 28723, 13, 28740, 28731, 19500, 320, 28169, 324, 5945, 298, 8735, 513, 478, 460, 9457, 3327, 1178, 684, 368, 28723, 995, 835, 506, 272, 1103, 298, 5556, 264, 3082, 302, 456, 1178, 297, 7808, 1070, 1221, 28723, 13, 28750, 28731, 19500, 354, 272, 21750, 296, 442, 26187, 302, 3327, 1178, 5202, 298, 368, 369, 349, 297, 11192, 28725, 22376, 28725, 16390, 442, 575, 5218, 28723, 13, 12069, 5039, 369, 272, 1862, 8807, 16837, 993, 808, 9853, 4870, 4331, 354, 9457, 3327, 1178, 304, 574, 4495, 390, 264, 1178, 3817, 28723, 2, 11512, 403, 1419, 15533, 2131, 272, 10468, 304, 403, 6576, 1106, 7715, 582, 486, 264, 1179, 4545, 283, 12844, 28723, 2584, 11532, 3807, 752, 12991, 272, 10501, 354, 559, 7162, 28725, 562, 553, 708, 6576, 28723, 1684, 11684, 1988, 2526, 354, 559, 28725, 401, 411, 1510, 10440, 346, 1992, 28717, 441, 2056, 272, 18781, 297, 28725, 304, 11512, 349, 1055, 395, 592, 28723, 985, 349, 264, 12882, 26344, 616, 26274, 28725, 390, 544, 18631, 497, 460, 28725, 304, 1484, 14298, 298, 1038, 592, 6458, 28723, 816, 506, 750, 4031, 293, 4218, 8557, 486, 910, 4377, 630, 349, 23729, 356, 395, 559, 4154, 28723, 985, 13468, 298, 1156, 395, 559, 27560, 27139, 28725, 277, 12370, 291, 395, 592, 28725, 304, 2822, 633, 1722, 28723, 13, 2198, 11512, 1610, 1238, 28725, 478, 622, 3688, 298, 1032, 910, 559, 13355, 10077, 4858, 304, 4098, 813, 2841, 9235, 395, 559, 8504, 356, 11690, 567, 18351, 28723, 13, 1551, 5580, 298, 8799, 11512, 28725, 1220, 684, 401, 411, 1510, 10440, 346, 1992, 28717, 441, 28742, 28713, 8296, 28725, 442, 949, 380, 298, 559, 22116, 1656, 28725, 6046, 1236, 28723, 13, 2086, 11512, 28742, 28713, 18805, 1312, 297, 813, 27560, 1656, 486, 12869, 272, 659, 407, 357, 422, 28769, 11394, 28757, 11551, 28723, 2, 816, 1658, 272, 464, 896, 1086, 28742, 852, 297, 1353, 9490, 28808, 13, 28741, 15943, 6434, 560, 7002, 734, 460, 5619, 1368, 28808, 13, 3381, 368, 506, 264, 2996, 21487, 298, 1611, 1488, 386, 1308, 28725, 368, 993, 1460, 378, 486, 1413, 272, 464, 1163, 1339, 28742, 3624, 28723, 10339, 297, 2273, 369, 2424, 368, 1704, 297, 272, 464, 1163, 1339, 28742, 622, 2727, 264, 13089, 744, 302, 456, 6073, 28723, 1047, 368, 506, 264, 680, 3327, 2996, 369, 368, 511, 459, 947, 4775, 28725, 368, 993, 4927, 528, 574, 2996, 3519, 28723, 13, 11159, 2996, 622, 347, 10239, 2373, 28705, 28781, 28783, 3316, 28723, 1047, 368, 4927, 574, 2996, 28725, 272, 4372, 622, 347, 877, 2384, 298, 368, 28723, 1047, 368, 1704, 574, 2996, 297, 272, 25493, 28725], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
+Preparing model...
+Number of samples per device: 2593
+Number of used samples per device: 256
+No cached model found. Running model on 256 samples for each device.
+Getting features...
+Starting ...
+GPU 0 Used Memory: 19968MB
+layer 0 similarity: 0.7558861970901489
+GPU 0 Used Memory: 24128MB
+layer 1 similarity: 0.8568289279937744
+GPU 0 Used Memory: 24128MB
+layer 2 similarity: 0.9117938280105591
+GPU 0 Used Memory: 24128MB
+layer 3 similarity: 0.924246609210968
+GPU 0 Used Memory: 24128MB
+layer 4 similarity: 0.9416924715042114
+GPU 0 Used Memory: 24128MB
+layer 5 similarity: 0.9442555904388428
+GPU 0 Used Memory: 24128MB
+layer 6 similarity: 0.9497947096824646
+GPU 0 Used Memory: 24128MB
+layer 7 similarity: 0.9405093193054199
+GPU 0 Used Memory: 24128MB
+layer 8 similarity: 0.9469999670982361
+GPU 0 Used Memory: 24128MB
+layer 9 similarity: 0.9522863626480103
+GPU 0 Used Memory: 24128MB
+layer 10 similarity: 0.9401220679283142
+GPU 0 Used Memory: 24128MB
+layer 11 similarity: 0.9445165991783142
+GPU 0 Used Memory: 24128MB
+layer 12 similarity: 0.9515524506568909
+GPU 0 Used Memory: 24128MB
+layer 13 similarity: 0.9556916952133179
+GPU 0 Used Memory: 24128MB
+layer 14 similarity: 0.9562400579452515
+GPU 0 Used Memory: 24128MB
+layer 15 similarity: 0.9571643471717834
+GPU 0 Used Memory: 24128MB
+layer 16 similarity: 0.966256320476532
+GPU 0 Used Memory: 24128MB
+layer 17 similarity: 0.9689388871192932
+GPU 0 Used Memory: 24128MB
+layer 18 similarity: 0.9712109565734863
+GPU 0 Used Memory: 24128MB
+layer 19 similarity: 0.9771278500556946
+GPU 0 Used Memory: 24128MB
+layer 20 similarity: 0.9865821003913879
+GPU 0 Used Memory: 24128MB
+layer 21 similarity: 0.9898095726966858
+GPU 0 Used Memory: 24128MB
+layer 22 similarity: 0.9935108423233032
+GPU 0 Used Memory: 24128MB
+layer 23 similarity: 0.9919309020042419
+GPU 0 Used Memory: 24128MB
+layer 24 similarity: 0.9942426085472107
+GPU 0 Used Memory: 24128MB
+layer 25 similarity: 0.9952782988548279
+GPU 0 Used Memory: 24128MB
+layer 26 similarity: 0.9948267936706543
+GPU 0 Used Memory: 24128MB
+layer 27 similarity: 0.9930533766746521
+GPU 0 Used Memory: 24128MB
+layer 28 similarity: 0.9923190474510193
+GPU 0 Used Memory: 24128MB
+layer 29 similarity: 0.9829567670822144
+GPU 0 Used Memory: 24128MB
+layer 30 similarity: 0.9863397479057312
+GPU 0 Used Memory: 24128MB
+layer 31 similarity: 0.9675409197807312
+Saving cached similarities to ../results_prune/cache/mistral-base-layer_drop_attn-c4_val-256samples.pt
+similarities
+ tensor([0.7559, 0.8568, 0.9118, 0.9242, 0.9417, 0.9443, 0.9498, 0.9405, 0.9470,
+        0.9523, 0.9401, 0.9445, 0.9516, 0.9557, 0.9562, 0.9572, 0.9663, 0.9689,
+        0.9712, 0.9771, 0.9866, 0.9898, 0.9935, 0.9919, 0.9942, 0.9953, 0.9948,
+        0.9931, 0.9923, 0.9830, 0.9863, 0.9675], device='cuda:0')
+Dropped layer: [25, 26, 24, 22, 27, 28, 23, 21], similarities: [0.9952782988548279, 0.9948267936706543, 0.9942426085472107, 0.9935108423233032, 0.9930533766746521, 0.9923190474510193, 0.9919309020042419, 0.9898095726966858]
+model: MistralForCausalLM(
+  (model): MistralModel(
+    (embed_tokens): Embedding(32000, 4096)
+    (layers): ModuleList(
+      (0-31): 32 x MistralDecoderLayer(
+        (self_attn): MistralAttention(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=1024, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=1024, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+        )
+        (mlp): MistralMLP(
+          (gate_proj): Linear(in_features=4096, out_features=14336, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=14336, bias=False)
+          (down_proj): Linear(in_features=14336, out_features=4096, bias=False)
+          (act_fn): SiLUActivation()
+        )
+        (input_layernorm): MistralRMSNorm((4096,), eps=1e-05)
+        (post_attention_layernorm): MistralRMSNorm((4096,), eps=1e-05)
+      )
+    )
+    (norm): MistralRMSNorm((4096,), eps=1e-05)
+    (rotary_emb): MistralRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+Reserved layers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 29, 30, 31]
+All done!
+
+[2/3] Post-dropping: saving pruned model...
+03/23/2026 17:36:07 - INFO - llmtuner.hparams.parser - Process rank: -1, device: cuda:0, n_gpu: 1
+  distributed training: False, compute dtype: torch.float16
+03/23/2026 17:36:07 - INFO - llmtuner.hparams.parser - Training/evaluation parameters Seq2SeqTrainingArguments(
+accelerator_config={'split_batches': False, 'dispatch_batches': None, 'even_batches': True, 'use_seedable_sampler': True, 'non_blocking': False, 'gradient_accumulation_kwargs': None, 'use_configured_state': False},
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+average_tokens_across_devices=True,
+batch_eval_metrics=False,
+bf16=False,
+bf16_full_eval=False,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=False,
+do_predict=False,
+do_train=False,
+enable_jit_checkpoint=False,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_do_concat_batches=True,
+eval_on_start=False,
+eval_steps=None,
+eval_strategy=IntervalStrategy.NO,
+eval_use_gather_object=False,
+fp16=True,
+fp16_full_eval=False,
+fsdp=[],
+fsdp_config={'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False},
+full_determinism=False,
+generation_config=None,
+generation_max_length=None,
+generation_num_beams=None,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+gradient_checkpointing_kwargs=None,
+greater_is_better=None,
+hub_always_push=False,
+hub_model_id=None,
+hub_private_repo=None,
+hub_revision=None,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+include_for_metrics=[],
+include_num_input_tokens_seen=no,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=5e-05,
+length_column_name=length,
+liger_kernel_config=None,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=None,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=10,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_kwargs=None,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+neftune_noise_alpha=None,
+num_train_epochs=3.0,
+optim=OptimizerNames.ADAMW_TORCH_FUSED,
+optim_args=None,
+optim_target_modules=None,
+output_dir=../results_prune/mistral-base-layer_drop_attn-discrete-drop8,
+parallelism_config=None,
+per_device_eval_batch_size=8,
+per_device_train_batch_size=8,
+predict_with_generate=False,
+prediction_loss_only=False,
+project=huggingface,
+push_to_hub=False,
+remove_unused_columns=True,
+report_to=[],
+restore_callback_states_from_checkpoint=False,
+resume_from_checkpoint=None,
+run_name=None,
+save_on_each_node=False,
+save_only_model=False,
+save_steps=500,
+save_strategy=SaveStrategy.STEPS,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+sortish_sampler=False,
+tf32=None,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torch_empty_cache_steps=None,
+trackio_space_id=trackio,
+train_sampling_strategy=random,
+use_cache=False,
+use_cpu=False,
+use_liger_kernel=False,
+warmup_ratio=None,
+warmup_steps=0,
+weight_decay=0.0,
+)
+Distributed environment: DistributedType.NO
+Num processes: 1
+Process index: 0
+Local process index: 0
+Device: cuda
+
+Mixed precision type: no
+
+Pruning Args: PruningArguments(prune_seed=42, prune_method='layer_drop', prune_model_save_path='../results_prune/mistral-base-layer_drop_attn-discrete-drop8/checkpoint', n_calibration_samples=256, prune_data_type='pt', sparsity_ratio=0.5, sparsity_type='unstructured', use_variant=False, level='expert', has_sparse=True, do_permute=True, use_svd=True, top_scores=True, expert_drop_method='layerwise_pruning', r=4, layer_drop_method='post_dropping', block_drop_method='discrete', drop_n=8, layer_drop_norm=True, target_layer='attn', only_update_config=False, similarity_cache_file='../results_prune/cache/mistral-base-layer_drop_attn-c4_val-256samples.pt', attention_variant=None, streamllm_n_init=128, streamllm_n_local=4096, ntk_rope_factor=4.0, gqa_num_kv_heads=4, pruned_model_path=None)
+Model Args: ModelArguments(model_name_or_path='mistralai/Mistral-7B-v0.1', adapter_name_or_path=None, cache_dir=None, use_fast_tokenizer=False, resize_vocab=False, split_special_tokens=False, model_revision='main', quantization_bit=None, quantization_type='nf4', double_quantization=True, rope_scaling=None, flash_attn=False, shift_attn=False, use_unsloth=False, disable_gradient_checkpointing=False, upcast_layernorm=False, upcast_lmhead_output=False, hf_hub_token=None, ms_hub_token=None, export_dir=None, export_size=1, export_quantization_bit=None, export_quantization_dataset=None, export_quantization_nsamples=128, export_quantization_maxlen=1024, export_legacy_format=False, export_hub_model_id=None, print_param_status=False, autogptq=False)
+MistralConfig {
+  "architectures": [
+    "MistralForCausalLM"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 1,
+  "dtype": "bfloat16",
+  "eos_token_id": 2,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 32768,
+  "model_type": "mistral",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pad_token_id": null,
+  "rms_norm_eps": 1e-05,
+  "rope_parameters": {
+    "rope_theta": 10000.0,
+    "rope_type": "default"
+  },
+  "sliding_window": 4096,
+  "tie_word_embeddings": false,
+  "transformers_version": "5.3.0",
+  "use_cache": false,
+  "vocab_size": 32000
+}
+
+03/23/2026 17:36:09 - INFO - llmtuner.model.adapter - Adapter is not found at evaluation, load the base model.
+03/23/2026 17:36:09 - INFO - llmtuner.model.loader - trainable params: 0 || all params: 7241732096 || trainable%: 0.0000
+03/23/2026 17:36:09 - INFO - llmtuner.model.loader - This IS expected that the trainable params is 0 if you are using model for inference only.
+Dropped attention list: [21, 22, 23, 24, 25, 26, 27, 28]
+Dropped MLP list: []
+Saving...
+
+[3/3] Running lm_eval benchmarks...
+  -> boolq (0-shot)

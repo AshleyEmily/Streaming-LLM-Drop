@@ -1,0 +1,10 @@
+========================================
+  Job         : 28351
+  Node        : cs004
+  Model       : mistralai/Mistral-7B-v0.1
+  eval_tokens : 400000
+========================================
+Loading model from: mistralai/Mistral-7B-v0.1
+Model loaded: 13812.5 MiB
+Total tokens in dataset: 334,661
+Evaluating first 400000 tokens

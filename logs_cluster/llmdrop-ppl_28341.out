@@ -1,0 +1,37 @@
+========================================
+  Job         : 28341
+  Node        : cs004
+  Full model  : meta-llama/Meta-Llama-3-8B
+  Pruned model: ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+  start_size  : 4
+  recent_size : 8188
+  eval_tokens : 400000
+========================================
+
+[1/2] Evaluating full (unpruned) model...
+Loading model from: meta-llama/Meta-Llama-3-8B
+Model loaded: 15316.5 MiB
+[enable_streaming_llm] patched 32 attention modules (start_size=4, recent_size=8188)
+[streaming] start_size=4  recent_size=8188
+Total tokens in dataset: 289,077
+Evaluating first 400000 tokens
+
+============================================================
+  Model          : meta-llama/Meta-Llama-3-8B
+  Streaming      : sink=4, window=8188
+  Tokens eval'd  : 289076
+  Perplexity     : 5.4648
+  Throughput     : 22.7 tok/s
+  Elapsed        : 12729.7 s
+  Model weights  : 15316.5 MiB
+  Peak GPU mem   : 18670.5 MiB
+  KV cache mem   : 3354.0 MiB
+============================================================
+
+[2/2] Evaluating pruned streamllm model...
+Loading model from: ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+Model loaded: 14676.4 MiB
+[enable_streaming_llm] patched 24 attention modules (start_size=4, recent_size=8188)
+[streaming] start_size=4  recent_size=8188
+Total tokens in dataset: 289,077
+Evaluating first 400000 tokens

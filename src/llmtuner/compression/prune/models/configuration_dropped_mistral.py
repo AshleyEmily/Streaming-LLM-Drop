@@ -123,6 +123,8 @@ class MistralConfig(PretrainedConfig):
         attention_dropout=0.0,
         drop_mlp_list=None,
         drop_attn_list=None,
+        streamllm_n_init=None,
+        streamllm_n_local=None,
         **kwargs,
     ):
         self.vocab_size = vocab_size
@@ -183,6 +185,8 @@ class MistralConfig(PretrainedConfig):
         self.use_cache = use_cache
         self.rope_theta = rope_theta
         self.attention_dropout = attention_dropout
+        self.streamllm_n_init = streamllm_n_init
+        self.streamllm_n_local = streamllm_n_local
 
         super().__init__(
             pad_token_id=pad_token_id,

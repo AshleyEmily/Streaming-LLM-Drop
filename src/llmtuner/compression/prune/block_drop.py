@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from .io import create_dir
-from .utils import prepare_calibration_input, print_gpu_memory, auto_map, CUSTOM_FILE
+from .utils import prepare_calibration_input, print_gpu_memory, auto_map, CUSTOM_FILE, forward_layer
 from .wrapper import HiddenStatesRecordWrapper
 
 logger = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ def get_block_similarities(model, dataloader: DataLoader, accelerator: Accelerat
     if cache_file is not None and os.path.exists(cache_file):
         # use cached file
         accelerator.print(f"Loading cached model from {cache_file}")
-        similarities = torch.load(cache_file, map_location=device)
+        similarities = torch.load(cache_file, map_location=device, weights_only=True)
 
     else:
         # calculate similarities
@@ -61,17 +61,17 @@ def get_block_similarities(model, dataloader: DataLoader, accelerator: Accelerat
             # Get states
             handle = layer.register_forward_hook(record_states_hook)
             for j in range(num_samples):
-                outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j])[0]
+                outputs[j] = forward_layer(unwrapped_model, layer, inputs[j], attention_mask[j], position_ids[j])
             handle.remove()
 
             # Update inputs & outputs
             inputs, outputs = outputs, inputs
             print_gpu_memory(accelerator)
 
-            input_hidden_states = torch.cat(wrapped_layer.input_hidden_states, dim=0).to(dtype).to(device)
-            output_hidden_states = torch.cat(wrapped_layer.output_hidden_states, dim=0).to(dtype).to(device)
-            cos_sim = F.cosine_similarity(input_hidden_states, output_hidden_states, dim=-1)  # (total_token_num)
-            cos_sim = cos_sim.mean()
+            cos_sim = torch.tensor(0.0, device=device)
+            for inp, out in zip(wrapped_layer.input_hidden_states, wrapped_layer.output_hidden_states):
+                cos_sim += F.cosine_similarity(inp.to(dtype).to(device), out.to(dtype).to(device), dim=-1).mean()
+            cos_sim /= len(wrapped_layer.input_hidden_states)
             cos_sim = accelerator.reduce(cos_sim, reduction="mean")  # 🔍 All reduce across devices
             similarities[i, 0] = cos_sim
             layer.to("cpu")  # 🔍
@@ -95,7 +95,7 @@ def get_block_similarities_consecutive(model, dataloader: DataLoader, accelerato
     if cache_file is not None and os.path.exists(cache_file):
         # use cached file
         accelerator.print(f"Loading cached model from {cache_file}")
-        similarities = torch.load(cache_file, map_location=device)
+        similarities = torch.load(cache_file, map_location=device, weights_only=True)
 
     else:
         # calculate similarities
@@ -139,10 +139,8 @@ def get_block_similarities_consecutive(model, dataloader: DataLoader, accelerato
             # Get states
             handle = layer.register_forward_hook(record_states_hook)
             for j in range(num_samples):
-                if getattr(unwrapped_model.config, "model_type", None) == "llama":
-                    outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j], cache_position=cache_position[j])[0]
-                else:
-                    outputs[j] = layer(inputs[j], attention_mask=attention_mask[j], position_ids=position_ids[j])[0]
+                _cache_pos = cache_position[j] if getattr(unwrapped_model.config, "model_type", None) == "llama" else None
+                outputs[j] = forward_layer(unwrapped_model, layer, inputs[j], attention_mask[j], position_ids[j], cache_position=_cache_pos)
             handle.remove()
 
             # Update inputs & outputs

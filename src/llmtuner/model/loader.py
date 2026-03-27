@@ -1,4 +1,3 @@
-from trl import AutoModelForCausalLMWithValueHead
 from typing import TYPE_CHECKING, Optional, Tuple
 
 from transformers import AutoTokenizer
@@ -111,6 +110,7 @@ def load_model_and_tokenizer(
     model = init_adapter(model, model_args, finetuning_args, is_trainable)
 
     if add_valuehead:
+        from trl import AutoModelForCausalLMWithValueHead
         model: "AutoModelForCausalLMWithValueHead" = AutoModelForCausalLMWithValueHead.from_pretrained(model)
         patch_valuehead_model(model)
 

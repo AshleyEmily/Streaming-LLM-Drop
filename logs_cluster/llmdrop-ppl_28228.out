@@ -1,0 +1,65 @@
+========================================
+  Job         : 28228
+  Node        : cs001
+  Full model  : mistralai/Mistral-7B-v0.1
+  Pruned model: ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+  start_size  : 1
+  recent_size : 255
+  eval_tokens : 4000
+========================================
+
+[1/2] Evaluating full (unpruned) model...
+Loading model from: mistralai/Mistral-7B-v0.1
+Model loaded: 13812.5 MiB
+[enable_streaming_llm] patched 32 attention modules (start_size=1, recent_size=255)
+[streaming] start_size=1  recent_size=255
+Total tokens in dataset: 334,661
+Evaluating first 4000 tokens
+
+============================================================
+  Model          : mistralai/Mistral-7B-v0.1
+  Streaming      : sink=1, window=255
+  Tokens eval'd  : 4000
+  Perplexity     : 6.6953
+  Throughput     : 29.4 tok/s
+  Elapsed        : 136.2 s
+  Model weights  : 13812.5 MiB
+  Peak GPU mem   : 13923.1 MiB
+  KV cache mem   : 110.6 MiB
+============================================================
+
+[2/2] Evaluating pruned streamllm model...
+Loading model from: ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+Model loaded: 13172.4 MiB
+[enable_streaming_llm] patched 24 attention modules (start_size=1, recent_size=255)
+[streaming] start_size=1  recent_size=255
+Total tokens in dataset: 334,661
+Evaluating first 4000 tokens
+
+============================================================
+  Model          : ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint
+  Streaming      : sink=1, window=255
+  Tokens eval'd  : 4000
+  Perplexity     : 9.4531
+  Throughput     : 35.3 tok/s
+  Elapsed        : 113.3 s
+  Model weights  : 13172.4 MiB
+  Peak GPU mem   : 13259.0 MiB
+  KV cache mem   : 86.6 MiB
+============================================================
+
+========================================
+  COMPARISON
+========================================
+Metric                       Full model         Pruned+StreamLLM  
+------                       ----------         ----------------  
+Perplexity                   6.6953             9.4531            
+Throughput (tok/s)           29.37              35.29             
+Elapsed (s)                  136.18             113.35            
+Model weights (MiB)          13812.5            13172.4           
+Peak GPU mem (MiB)           13923.1            13259.0           
+KV cache mem (MiB)           110.6              86.6              
+
+  Full results   : ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/ppl_full/metrics.txt
+  Pruned results : ../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/ppl_streaming/metrics.txt
+========================================

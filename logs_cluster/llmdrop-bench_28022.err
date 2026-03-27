@@ -1,0 +1,81 @@
+Loading python 3.12.12 module ....
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   1%|          | 2/291 [00:00<00:18, 15.86it/s]Loading weights:   4%|▍         | 13/291 [00:00<00:04, 60.77it/s]Loading weights:  11%|█         | 31/291 [00:00<00:02, 103.25it/s]Loading weights:  14%|█▍        | 42/291 [00:00<00:02, 102.80it/s]Loading weights:  20%|█▉        | 58/291 [00:00<00:02, 112.48it/s]Loading weights:  26%|██▌       | 76/291 [00:00<00:01, 127.80it/s]Loading weights:  31%|███▏      | 91/291 [00:00<00:01, 133.34it/s]Loading weights:  36%|███▌      | 105/291 [00:00<00:01, 127.48it/s]Loading weights:  42%|████▏     | 121/291 [00:01<00:01, 124.47it/s]Loading weights:  48%|████▊     | 139/291 [00:01<00:01, 131.95it/s]Loading weights:  53%|█████▎    | 154/291 [00:01<00:01, 126.53it/s]Loading weights:  58%|█████▊    | 168/291 [00:01<00:00, 126.37it/s]Loading weights:  63%|██████▎   | 184/291 [00:01<00:00, 132.12it/s]Loading weights:  69%|██████▉   | 202/291 [00:01<00:00, 128.65it/s]Loading weights:  75%|███████▍  | 218/291 [00:01<00:00, 134.34it/s]Loading weights:  80%|███████▉  | 232/291 [00:01<00:00, 124.70it/s]Loading weights:  85%|████████▍ | 247/291 [00:02<00:00, 127.48it/s]Loading weights:  89%|████████▉ | 260/291 [00:02<00:00, 124.61it/s]Loading weights:  94%|█████████▍| 274/291 [00:02<00:00, 120.29it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 123.91it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/219 [00:00<?, ?it/s]Loading weights:   2%|▏         | 5/219 [00:00<00:05, 37.22it/s]Loading weights:  10%|█         | 22/219 [00:00<00:01, 99.26it/s]Loading weights:  15%|█▌        | 33/219 [00:00<00:01, 96.75it/s]Loading weights:  22%|██▏       | 49/219 [00:00<00:01, 114.09it/s]Loading weights:  28%|██▊       | 61/219 [00:00<00:01, 109.51it/s]Loading weights:  35%|███▍      | 76/219 [00:00<00:01, 117.25it/s]Loading weights:  40%|████      | 88/219 [00:00<00:01, 111.93it/s]Loading weights:  47%|████▋     | 103/219 [00:00<00:00, 118.63it/s]Loading weights:  53%|█████▎    | 115/219 [00:01<00:00, 111.09it/s]Loading weights:  59%|█████▉    | 130/219 [00:01<00:00, 117.79it/s]Loading weights:  65%|██████▍   | 142/219 [00:01<00:00, 112.70it/s]Loading weights:  72%|███████▏  | 157/219 [00:01<00:00, 119.00it/s]Loading weights:  77%|███████▋  | 169/219 [00:01<00:00, 113.55it/s]Loading weights:  84%|████████▍ | 184/219 [00:01<00:00, 119.67it/s]Loading weights:  90%|████████▉ | 197/219 [00:01<00:00, 116.13it/s]Loading weights:  96%|█████████▋| 211/219 [00:01<00:00, 118.82it/s]Loading weights: 100%|██████████| 219/219 [00:01<00:00, 113.83it/s]
+[1mMistralForCausalLM LOAD REPORT[0m from: ../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint
+Key                                                                           | Status     |  | 
+------------------------------------------------------------------------------+------------+--+-
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.q_proj.weight         | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.v_proj.weight         | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.post_attention_layernorm.weight | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.o_proj.weight         | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.mlp.down_proj.weight            | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.mlp.up_proj.weight              | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.mlp.gate_proj.weight            | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.input_layernorm.weight          | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.k_proj.weight         | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/251 [00:00<?, ?it/s]Loading weights:   4%|▎         | 9/251 [00:00<00:02, 87.35it/s]Loading weights:   9%|▉         | 23/251 [00:00<00:02, 113.86it/s]Loading weights:  16%|█▌        | 40/251 [00:00<00:01, 131.94it/s]Loading weights:  22%|██▏       | 54/251 [00:00<00:01, 132.13it/s]Loading weights:  27%|██▋       | 68/251 [00:00<00:01, 132.18it/s]Loading weights:  34%|███▍      | 85/251 [00:00<00:01, 138.81it/s]Loading weights:  39%|███▉      | 99/251 [00:00<00:01, 136.87it/s]Loading weights:  45%|████▌     | 113/251 [00:00<00:01, 135.45it/s]Loading weights:  52%|█████▏    | 130/251 [00:00<00:00, 140.91it/s]Loading weights:  58%|█████▊    | 145/251 [00:01<00:00, 139.27it/s]Loading weights:  63%|██████▎   | 159/251 [00:01<00:00, 132.47it/s]Loading weights:  70%|███████   | 176/251 [00:01<00:00, 138.28it/s]Loading weights:  76%|███████▋  | 192/251 [00:01<00:00, 139.61it/s]Loading weights:  82%|████████▏ | 206/251 [00:01<00:00, 111.47it/s]Loading weights:  87%|████████▋ | 218/251 [00:01<00:00, 100.02it/s]Loading weights:  91%|█████████ | 229/251 [00:01<00:00, 101.10it/s]Loading weights:  97%|█████████▋| 244/251 [00:01<00:00, 110.19it/s]Loading weights: 100%|██████████| 251/251 [00:02<00:00, 124.59it/s]
+[1mMistralForCausalLM LOAD REPORT[0m from: ../results_prune/mistral-base-layer_drop_attn-discrete-drop8/checkpoint
+Key                                                                   | Status     |  | 
+----------------------------------------------------------------------+------------+--+-
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.input_layernorm.weight  | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.o_proj.weight | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.v_proj.weight | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.q_proj.weight | UNEXPECTED |  | 
+model.layers.{21, 22, 23, 24, 25, 26, 27, 28}.self_attn.k_proj.weight | UNEXPECTED |  | 
+
+[3mNotes:
+- UNEXPECTED[3m	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.[0m
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   3%|▎         | 10/291 [00:00<00:02, 96.62it/s]Loading weights:   8%|▊         | 23/291 [00:00<00:02, 115.22it/s]Loading weights:  14%|█▎        | 40/291 [00:00<00:01, 132.97it/s]Loading weights:  19%|█▊        | 54/291 [00:00<00:01, 132.79it/s]Loading weights:  23%|██▎       | 68/291 [00:00<00:01, 132.21it/s]Loading weights:  29%|██▉       | 85/291 [00:00<00:01, 139.08it/s]Loading weights:  34%|███▍      | 99/291 [00:00<00:01, 134.94it/s]Loading weights:  39%|███▉      | 113/291 [00:00<00:01, 136.22it/s]Loading weights:  45%|████▍     | 130/291 [00:00<00:01, 141.43it/s]Loading weights:  50%|████▉     | 145/291 [00:01<00:01, 139.76it/s]Loading weights:  55%|█████▍    | 159/291 [00:01<00:00, 133.06it/s]Loading weights:  60%|██████    | 176/291 [00:01<00:00, 138.91it/s]Loading weights:  66%|██████▋   | 193/291 [00:01<00:00, 143.01it/s]Loading weights:  71%|███████▏  | 208/291 [00:01<00:00, 141.02it/s]Loading weights:  77%|███████▋  | 223/291 [00:01<00:00, 136.74it/s]Loading weights:  82%|████████▏ | 239/291 [00:01<00:00, 138.92it/s]Loading weights:  88%|████████▊ | 256/291 [00:01<00:00, 143.35it/s]Loading weights:  93%|█████████▎| 271/291 [00:01<00:00, 140.61it/s]Loading weights:  98%|█████████▊| 286/291 [00:02<00:00, 136.17it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 138.15it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   2%|▏         | 5/291 [00:00<00:06, 41.83it/s]Loading weights:   8%|▊         | 22/291 [00:00<00:02, 105.48it/s]Loading weights:  11%|█▏        | 33/291 [00:00<00:02, 100.19it/s]Loading weights:  17%|█▋        | 49/291 [00:00<00:02, 117.55it/s]Loading weights:  21%|██        | 61/291 [00:00<00:02, 111.90it/s]Loading weights:  26%|██▌       | 76/291 [00:00<00:01, 119.98it/s]Loading weights:  31%|███       | 89/291 [00:00<00:01, 116.78it/s]Loading weights:  35%|███▌      | 103/291 [00:00<00:01, 120.28it/s]Loading weights:  40%|███▉      | 116/291 [00:01<00:01, 117.11it/s]Loading weights:  45%|████▍     | 130/291 [00:01<00:01, 120.44it/s]Loading weights:  49%|████▉     | 143/291 [00:01<00:01, 117.27it/s]Loading weights:  54%|█████▍    | 157/291 [00:01<00:01, 120.42it/s]Loading weights:  58%|█████▊    | 170/291 [00:01<00:01, 117.41it/s]Loading weights:  63%|██████▎   | 184/291 [00:01<00:00, 120.54it/s]Loading weights:  68%|██████▊   | 197/291 [00:01<00:00, 117.35it/s]Loading weights:  73%|███████▎  | 211/291 [00:01<00:00, 120.59it/s]Loading weights:  77%|███████▋  | 224/291 [00:01<00:00, 117.42it/s]Loading weights:  82%|████████▏ | 238/291 [00:02<00:00, 120.46it/s]Loading weights:  86%|████████▋ | 251/291 [00:02<00:00, 117.33it/s]Loading weights:  91%|█████████ | 265/291 [00:02<00:00, 120.47it/s]Loading weights:  96%|█████████▌| 278/291 [00:02<00:00, 117.36it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 117.35it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:39,  7.38it/s]Loading weights:   2%|▏         | 5/291 [00:00<00:15, 18.64it/s]Loading weights:  12%|█▏        | 35/291 [00:00<00:02, 119.15it/s]Loading weights:  17%|█▋        | 50/291 [00:00<00:01, 125.67it/s]Loading weights:  22%|██▏       | 65/291 [00:00<00:01, 132.90it/s]Loading weights:  27%|██▋       | 80/291 [00:00<00:01, 131.67it/s]Loading weights:  32%|███▏      | 94/291 [00:00<00:01, 133.27it/s]Loading weights:  38%|███▊      | 112/291 [00:00<00:01, 129.20it/s]Loading weights:  43%|████▎     | 126/291 [00:01<00:01, 130.71it/s]Loading weights:  48%|████▊     | 140/291 [00:01<00:01, 126.24it/s]Loading weights:  54%|█████▍    | 157/291 [00:01<00:01, 130.98it/s]Loading weights:  59%|█████▉    | 171/291 [00:01<00:00, 129.59it/s]Loading weights:  64%|██████▎   | 185/291 [00:01<00:00, 125.74it/s]Loading weights:  68%|██████▊   | 198/291 [00:01<00:00, 125.90it/s]Loading weights:  73%|███████▎  | 211/291 [00:01<00:00, 125.44it/s]Loading weights:  77%|███████▋  | 224/291 [00:01<00:00, 125.21it/s]Loading weights:  82%|████████▏ | 238/291 [00:01<00:00, 127.50it/s]Loading weights:  86%|████████▋ | 251/291 [00:02<00:00, 128.10it/s]Loading weights:  91%|█████████ | 265/291 [00:02<00:00, 123.72it/s]Loading weights:  96%|█████████▌| 278/291 [00:02<00:00, 123.77it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 123.21it/s]
+Traceback (most recent call last):
+  File "/fs/atipa/home/015902406/LLM-Drop-v2/scripts/benchmark_inference.py", line 191, in <module>
+    benchmark(
+  File "/fs/atipa/home/015902406/LLM-Drop-v2/scripts/benchmark_inference.py", line 90, in benchmark
+    _out = model(dummy_ids, use_cache=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/transformers/utils/generic.py", line 843, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/transformers/models/mistral/modeling_mistral.py", line 460, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs/atipa/home/015902406/LLM-Drop-v2/scripts/../src/llmtuner/compression/streaming_llm/enable_streaming_llm.py", line 193, in _streaming_model_forward
+    result = decoder_layer(
+             ^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/015902406/venvs/llmdrop/lib/python3.12/site-packages/transformers/models/mistral/modeling_mistral.py", line 228, in forward
+    hidden_states, _ = self.self_attn(
+    ^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)

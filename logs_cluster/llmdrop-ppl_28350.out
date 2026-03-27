@@ -1,0 +1,17 @@
+========================================
+  Job         : 28350
+  Node        : cs003
+  Full model  : meta-llama/Meta-Llama-3-8B
+  Pruned model: ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm-8192/checkpoint
+  start_size  : 4
+  recent_size : 8188
+  eval_tokens : 400000
+========================================
+
+[1/2] Evaluating full (unpruned) model...
+Loading model from: meta-llama/Meta-Llama-3-8B
+Model loaded: 15316.5 MiB
+[enable_streaming_llm] patched 32 attention modules (start_size=4, recent_size=8188)
+[streaming] start_size=4  recent_size=8188
+Total tokens in dataset: 289,077
+Evaluating first 400000 tokens
