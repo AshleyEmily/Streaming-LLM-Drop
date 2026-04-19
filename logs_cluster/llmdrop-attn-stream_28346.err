@@ -1,200 +1,0 @@
-Loading python 3.12.12 module ....
-The following values were not passed to `accelerate launch` and had defaults used instead:
-	`--num_machines` was set to a value of `1`
-	`--mixed_precision` was set to a value of `'no'`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-[INFO|configuration_utils.py:672] 2026-03-26 17:06:58,643 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/config.json
-[INFO|configuration_utils.py:744] 2026-03-26 17:06:58,645 >> Model config LlamaConfig {
-  "architectures": [
-    "LlamaForCausalLM"
-  ],
-  "attention_bias": false,
-  "attention_dropout": 0.0,
-  "bos_token_id": 128000,
-  "dtype": "bfloat16",
-  "eos_token_id": 128001,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 8192,
-  "mlp_bias": false,
-  "model_type": "llama",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "pretraining_tp": 1,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 500000.0,
-    "rope_type": "default"
-  },
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 128256
-}
-
-[INFO|configuration_utils.py:672] 2026-03-26 17:06:59,896 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/config.json
-[INFO|configuration_utils.py:744] 2026-03-26 17:06:59,897 >> Model config LlamaConfig {
-  "architectures": [
-    "LlamaForCausalLM"
-  ],
-  "attention_bias": false,
-  "attention_dropout": 0.0,
-  "bos_token_id": 128000,
-  "dtype": "bfloat16",
-  "eos_token_id": 128001,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 8192,
-  "mlp_bias": false,
-  "model_type": "llama",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "pretraining_tp": 1,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 500000.0,
-    "rope_type": "default"
-  },
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 128256
-}
-
-[INFO|modeling_utils.py:710] 2026-03-26 17:06:59,985 >> loading weights file model.safetensors from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/model.safetensors.index.json
-[INFO|configuration_utils.py:1014] 2026-03-26 17:06:59,987 >> Generate config GenerationConfig {
-  "bos_token_id": 128000,
-  "eos_token_id": 128001,
-  "output_attentions": false,
-  "output_hidden_states": false,
-  "use_cache": false
-}
-
-Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<02:55,  1.65it/s]Loading weights:  20%|██        | 59/291 [00:00<00:02, 111.27it/s]Loading weights:  32%|███▏      | 93/291 [00:00<00:01, 136.10it/s]Loading weights:  41%|████      | 120/291 [00:01<00:01, 143.37it/s]Loading weights:  49%|████▉     | 143/291 [00:01<00:01, 140.68it/s]Loading weights:  56%|█████▌    | 163/291 [00:01<00:00, 145.87it/s]Loading weights:  63%|██████▎   | 182/291 [00:01<00:00, 152.06it/s]Loading weights:  69%|██████▊   | 200/291 [00:01<00:00, 151.33it/s]Loading weights:  75%|███████▍  | 217/291 [00:01<00:00, 152.15it/s]Loading weights:  80%|████████  | 234/291 [00:01<00:00, 148.16it/s]Loading weights:  86%|████████▌ | 250/291 [00:01<00:00, 143.79it/s]Loading weights:  91%|█████████ | 265/291 [00:02<00:00, 139.15it/s]Loading weights:  97%|█████████▋| 283/291 [00:02<00:00, 138.98it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 132.96it/s]
-[INFO|configuration_utils.py:967] 2026-03-26 17:07:02,724 >> loading configuration file generation_config.json from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/generation_config.json
-[INFO|configuration_utils.py:1014] 2026-03-26 17:07:02,725 >> Generate config GenerationConfig {
-  "bos_token_id": 128000,
-  "do_sample": true,
-  "eos_token_id": 128001,
-  "max_length": 4096,
-  "temperature": 0.6,
-  "top_p": 0.9
-}
-
-[INFO|dynamic_module_utils.py:406] 2026-03-26 17:07:02,810 >> Could not locate the custom_generate/generate.py inside meta-llama/Meta-Llama-3-8B.
-Using custom data configuration default-c6e6b935de1ad2ef
-Loading Dataset Infos from /home/015902406/venvs/llmdrop/lib/python3.12/site-packages/datasets/packaged_modules/json
-Overwrite dataset info from restored data version if exists.
-Loading Dataset info from /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092
-Found cached dataset json (/home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092)
-Loading Dataset info from /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092
-Loading cached processed dataset at /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092/cache-3952855f25c8d6c5.arrow
-Running tokenizer on dataset:   0%|          | 0/10000 [00:00<?, ? examples/s]Caching processed dataset at /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/f4e89e8750d5d5ffbef2c078bf0ddfedef29dc2faff52a6255cf513c05eb1092/cache-e141513e4f927109.arrow
-Running tokenizer on dataset:  10%|█         | 1000/10000 [00:00<00:02, 4156.64 examples/s]Running tokenizer on dataset:  20%|██        | 2000/10000 [00:00<00:01, 4622.58 examples/s]Running tokenizer on dataset:  30%|███       | 3000/10000 [00:00<00:01, 4567.95 examples/s]Running tokenizer on dataset:  40%|████      | 4000/10000 [00:00<00:01, 4805.44 examples/s]Running tokenizer on dataset:  50%|█████     | 5000/10000 [00:01<00:01, 4904.25 examples/s]Running tokenizer on dataset:  60%|██████    | 6000/10000 [00:01<00:00, 4747.23 examples/s]Running tokenizer on dataset:  70%|███████   | 7000/10000 [00:01<00:00, 4859.73 examples/s]Running tokenizer on dataset:  80%|████████  | 8000/10000 [00:01<00:00, 4643.66 examples/s]Running tokenizer on dataset:  90%|█████████ | 9000/10000 [00:01<00:00, 4705.78 examples/s]Running tokenizer on dataset: 100%|██████████| 10000/10000 [00:02<00:00, 4724.48 examples/s]Running tokenizer on dataset: 100%|██████████| 10000/10000 [00:02<00:00, 4638.39 examples/s]
-Recording hidden states...:   0%|          | 0/32 [00:00<?, ?it/s]Recording hidden states...:   3%|▎         | 1/32 [00:19<10:14, 19.82s/it]Recording hidden states...:   6%|▋         | 2/32 [00:39<09:50, 19.68s/it]Recording hidden states...:   9%|▉         | 3/32 [00:58<09:28, 19.62s/it]Recording hidden states...:  12%|█▎        | 4/32 [01:18<09:08, 19.60s/it]Recording hidden states...:  16%|█▌        | 5/32 [01:38<08:48, 19.59s/it]Recording hidden states...:  19%|█▉        | 6/32 [01:57<08:29, 19.59s/it]Recording hidden states...:  22%|██▏       | 7/32 [02:17<08:09, 19.58s/it]Recording hidden states...:  25%|██▌       | 8/32 [02:36<07:50, 19.59s/it]Recording hidden states...:  28%|██▊       | 9/32 [02:56<07:30, 19.58s/it]Recording hidden states...:  31%|███▏      | 10/32 [03:15<07:10, 19.59s/it]Recording hidden states...:  34%|███▍      | 11/32 [03:35<06:51, 19.58s/it]Recording hidden states...:  38%|███▊      | 12/32 [03:55<06:31, 19.58s/it]Recording hidden states...:  41%|████      | 13/32 [04:14<06:11, 19.57s/it]Recording hidden states...:  44%|████▍     | 14/32 [04:34<05:52, 19.57s/it]Recording hidden states...:  47%|████▋     | 15/32 [04:53<05:32, 19.56s/it]Recording hidden states...:  50%|█████     | 16/32 [05:13<05:12, 19.56s/it]Recording hidden states...:  53%|█████▎    | 17/32 [05:32<04:53, 19.56s/it]Recording hidden states...:  56%|█████▋    | 18/32 [05:52<04:33, 19.56s/it]Recording hidden states...:  59%|█████▉    | 19/32 [06:12<04:14, 19.56s/it]Recording hidden states...:  62%|██████▎   | 20/32 [06:31<03:54, 19.57s/it]Recording hidden states...:  66%|██████▌   | 21/32 [06:51<03:35, 19.55s/it]Recording hidden states...:  69%|██████▉   | 22/32 [07:10<03:15, 19.56s/it]Recording hidden states...:  72%|███████▏  | 23/32 [07:30<02:55, 19.55s/it]Recording hidden states...:  75%|███████▌  | 24/32 [07:49<02:36, 19.55s/it]Recording hidden states...:  78%|███████▊  | 25/32 [08:09<02:16, 19.54s/it]Recording hidden states...:  81%|████████▏ | 26/32 [08:28<01:57, 19.56s/it]Recording hidden states...:  84%|████████▍ | 27/32 [08:48<01:37, 19.55s/it]Recording hidden states...:  88%|████████▊ | 28/32 [09:08<01:18, 19.56s/it]Recording hidden states...:  91%|█████████ | 29/32 [09:27<00:58, 19.55s/it]Recording hidden states...:  94%|█████████▍| 30/32 [09:47<00:39, 19.56s/it]Recording hidden states...:  97%|█████████▋| 31/32 [10:06<00:19, 19.55s/it]Recording hidden states...: 100%|██████████| 32/32 [10:26<00:00, 19.56s/it]Recording hidden states...: 100%|██████████| 32/32 [10:26<00:00, 19.57s/it]
-[INFO|configuration_utils.py:672] 2026-03-26 17:17:43,063 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/config.json
-[INFO|configuration_utils.py:744] 2026-03-26 17:17:43,064 >> Model config LlamaConfig {
-  "architectures": [
-    "LlamaForCausalLM"
-  ],
-  "attention_bias": false,
-  "attention_dropout": 0.0,
-  "bos_token_id": 128000,
-  "dtype": "bfloat16",
-  "eos_token_id": 128001,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 8192,
-  "mlp_bias": false,
-  "model_type": "llama",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "pretraining_tp": 1,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 500000.0,
-    "rope_type": "default"
-  },
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 128256
-}
-
-[INFO|configuration_utils.py:672] 2026-03-26 17:17:44,305 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/config.json
-[INFO|configuration_utils.py:744] 2026-03-26 17:17:44,306 >> Model config LlamaConfig {
-  "architectures": [
-    "LlamaForCausalLM"
-  ],
-  "attention_bias": false,
-  "attention_dropout": 0.0,
-  "bos_token_id": 128000,
-  "dtype": "bfloat16",
-  "eos_token_id": 128001,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 8192,
-  "mlp_bias": false,
-  "model_type": "llama",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "pretraining_tp": 1,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 500000.0,
-    "rope_type": "default"
-  },
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 128256
-}
-
-[INFO|modeling_utils.py:710] 2026-03-26 17:17:44,398 >> loading weights file model.safetensors from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/model.safetensors.index.json
-[INFO|configuration_utils.py:1014] 2026-03-26 17:17:44,399 >> Generate config GenerationConfig {
-  "bos_token_id": 128000,
-  "eos_token_id": 128001,
-  "output_attentions": false,
-  "output_hidden_states": false,
-  "use_cache": false
-}
-
-Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:  17%|█▋        | 49/291 [00:00<00:00, 441.00it/s]Loading weights:  34%|███▍      | 100/291 [00:00<00:00, 475.45it/s]Loading weights:  53%|█████▎    | 154/291 [00:00<00:00, 492.51it/s]Loading weights:  70%|███████   | 204/291 [00:00<00:00, 495.20it/s]Loading weights:  88%|████████▊ | 256/291 [00:00<00:00, 496.32it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 501.04it/s]
-[INFO|configuration_utils.py:967] 2026-03-26 17:17:45,606 >> loading configuration file generation_config.json from cache at /home/015902406/.cache/huggingface/hub/models--meta-llama--Meta-Llama-3-8B/snapshots/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/generation_config.json
-[INFO|configuration_utils.py:1014] 2026-03-26 17:17:45,606 >> Generate config GenerationConfig {
-  "bos_token_id": 128000,
-  "do_sample": true,
-  "eos_token_id": 128001,
-  "max_length": 4096,
-  "temperature": 0.6,
-  "top_p": 0.9
-}
-
-[INFO|dynamic_module_utils.py:406] 2026-03-26 17:17:45,695 >> Could not locate the custom_generate/generate.py inside meta-llama/Meta-Llama-3-8B.
-[INFO|configuration_utils.py:434] 2026-03-26 17:17:45,732 >> Configuration saved in ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm-8192/checkpoint/config.json
-[INFO|configuration_utils.py:803] 2026-03-26 17:17:45,737 >> Configuration saved in ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm-8192/checkpoint/generation_config.json
-Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:23<00:00, 23.19s/it]Writing model shards: 100%|██████████| 1/1 [00:23<00:00, 23.19s/it]
-[INFO|modeling_utils.py:3438] 2026-03-26 17:18:08,954 >> Model weights saved in ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm-8192/checkpoint/model.safetensors
-[INFO|tokenization_utils_base.py:2091] 2026-03-26 17:18:09,225 >> tokenizer config file saved in ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm-8192/checkpoint/tokenizer_config.json
-[INFO|configuration_utils.py:434] 2026-03-26 17:18:09,534 >> Configuration saved in ../results_prune/llama3-8b-layer_drop_attn-discrete-drop8-streamllm-8192/checkpoint/config.json

@@ -1,179 +1,0 @@
-Loading python 3.12.12 module ....
-The following values were not passed to `accelerate launch` and had defaults used instead:
-	`--num_machines` was set to a value of `1`
-	`--mixed_precision` was set to a value of `'no'`
-	`--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-[INFO|configuration_utils.py:672] 2026-03-22 20:25:38,456 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
-[INFO|configuration_utils.py:744] 2026-03-22 20:25:38,471 >> Model config MistralConfig {
-  "architectures": [
-    "MistralForCausalLM"
-  ],
-  "attention_dropout": 0.0,
-  "bos_token_id": 1,
-  "dtype": "bfloat16",
-  "eos_token_id": 2,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 32768,
-  "model_type": "mistral",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 10000.0,
-    "rope_type": "default"
-  },
-  "sliding_window": 4096,
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 32000
-}
-
-[INFO|configuration_utils.py:672] 2026-03-22 20:25:39,110 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
-[INFO|configuration_utils.py:744] 2026-03-22 20:25:39,110 >> Model config MistralConfig {
-  "architectures": [
-    "MistralForCausalLM"
-  ],
-  "attention_dropout": 0.0,
-  "bos_token_id": 1,
-  "dtype": "bfloat16",
-  "eos_token_id": 2,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 32768,
-  "model_type": "mistral",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 10000.0,
-    "rope_type": "default"
-  },
-  "sliding_window": 4096,
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 32000
-}
-
-[INFO|modeling_utils.py:710] 2026-03-22 20:25:39,225 >> loading weights file model.safetensors from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/model.safetensors.index.json
-[INFO|configuration_utils.py:1014] 2026-03-22 20:25:39,234 >> Generate config GenerationConfig {
-  "bos_token_id": 1,
-  "eos_token_id": 2,
-  "output_attentions": false,
-  "output_hidden_states": false,
-  "use_cache": false
-}
-
-Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<01:01,  4.69it/s]Loading weights:   8%|▊         | 22/291 [00:00<00:03, 71.69it/s]Loading weights:  11%|█▏        | 33/291 [00:00<00:03, 83.89it/s]Loading weights:  17%|█▋        | 49/291 [00:00<00:02, 90.34it/s]Loading weights:  23%|██▎       | 67/291 [00:00<00:02, 94.26it/s]Loading weights:  29%|██▉       | 85/291 [00:00<00:02, 98.04it/s]Loading weights:  35%|███▌      | 103/291 [00:01<00:01, 101.00it/s]Loading weights:  42%|████▏     | 121/291 [00:01<00:01, 102.79it/s]Loading weights:  48%|████▊     | 139/291 [00:01<00:01, 104.06it/s]Loading weights:  54%|█████▍    | 157/291 [00:01<00:01, 105.73it/s]Loading weights:  60%|██████    | 175/291 [00:01<00:01, 106.09it/s]Loading weights:  66%|██████▋   | 193/291 [00:01<00:00, 107.23it/s]Loading weights:  73%|███████▎  | 211/291 [00:02<00:00, 92.42it/s] Loading weights:  76%|███████▌  | 221/291 [00:02<00:00, 87.99it/s]Loading weights:  82%|████████▏ | 238/291 [00:02<00:00, 90.53it/s]Loading weights:  88%|████████▊ | 256/291 [00:02<00:00, 96.89it/s]Loading weights:  94%|█████████▍| 274/291 [00:02<00:00, 98.08it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 97.74it/s]
-[INFO|configuration_utils.py:967] 2026-03-22 20:25:42,708 >> loading configuration file generation_config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/generation_config.json
-[INFO|configuration_utils.py:1014] 2026-03-22 20:25:42,708 >> Generate config GenerationConfig {
-  "bos_token_id": 1,
-  "eos_token_id": 2
-}
-
-[INFO|dynamic_module_utils.py:406] 2026-03-22 20:25:42,794 >> Could not locate the custom_generate/generate.py inside mistralai/Mistral-7B-v0.1.
-Using custom data configuration default-c6e6b935de1ad2ef
-Found cached dataset json (/home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/911f53f3a8bbb79dd3d2b0c0d747d5e4ad3e32a9a44df7ed4ff47427ea2b3d71)
-Loading cached processed dataset at /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/911f53f3a8bbb79dd3d2b0c0d747d5e4ad3e32a9a44df7ed4ff47427ea2b3d71/cache-e06c7ecf8df91e88_*_of_00001.arrow
-Loading cached processed dataset at /home/015902406/.cache/huggingface/datasets/json/default-c6e6b935de1ad2ef/0.0.0/911f53f3a8bbb79dd3d2b0c0d747d5e4ad3e32a9a44df7ed4ff47427ea2b3d71/cache-6fa38df9583c37d9_*_of_00001.arrow
-[INFO|configuration_utils.py:672] 2026-03-22 20:26:20,394 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
-[INFO|configuration_utils.py:744] 2026-03-22 20:26:20,407 >> Model config MistralConfig {
-  "architectures": [
-    "MistralForCausalLM"
-  ],
-  "attention_dropout": 0.0,
-  "bos_token_id": 1,
-  "dtype": "bfloat16",
-  "eos_token_id": 2,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 32768,
-  "model_type": "mistral",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 10000.0,
-    "rope_type": "default"
-  },
-  "sliding_window": 4096,
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 32000
-}
-
-[INFO|configuration_utils.py:672] 2026-03-22 20:26:21,022 >> loading configuration file config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/config.json
-[INFO|configuration_utils.py:744] 2026-03-22 20:26:21,022 >> Model config MistralConfig {
-  "architectures": [
-    "MistralForCausalLM"
-  ],
-  "attention_dropout": 0.0,
-  "bos_token_id": 1,
-  "dtype": "bfloat16",
-  "eos_token_id": 2,
-  "head_dim": 128,
-  "hidden_act": "silu",
-  "hidden_size": 4096,
-  "initializer_range": 0.02,
-  "intermediate_size": 14336,
-  "max_position_embeddings": 32768,
-  "model_type": "mistral",
-  "num_attention_heads": 32,
-  "num_hidden_layers": 32,
-  "num_key_value_heads": 8,
-  "pad_token_id": null,
-  "rms_norm_eps": 1e-05,
-  "rope_parameters": {
-    "rope_theta": 10000.0,
-    "rope_type": "default"
-  },
-  "sliding_window": 4096,
-  "tie_word_embeddings": false,
-  "transformers_version": "5.3.0",
-  "use_cache": true,
-  "vocab_size": 32000
-}
-
-[INFO|modeling_utils.py:710] 2026-03-22 20:26:21,127 >> loading weights file model.safetensors from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/model.safetensors.index.json
-[INFO|configuration_utils.py:1014] 2026-03-22 20:26:21,134 >> Generate config GenerationConfig {
-  "bos_token_id": 1,
-  "eos_token_id": 2,
-  "output_attentions": false,
-  "output_hidden_states": false,
-  "use_cache": false
-}
-
-Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:  11%|█         | 31/291 [00:00<00:00, 305.48it/s]Loading weights:  23%|██▎       | 67/291 [00:00<00:00, 332.90it/s]Loading weights:  35%|███▌      | 103/291 [00:00<00:00, 343.58it/s]Loading weights:  48%|████▊     | 139/291 [00:00<00:00, 342.70it/s]Loading weights:  60%|██████    | 175/291 [00:00<00:00, 326.70it/s]Loading weights:  71%|███████▏  | 208/291 [00:00<00:00, 272.82it/s]Loading weights:  81%|████████▏ | 237/291 [00:00<00:00, 247.25it/s]Loading weights:  90%|█████████ | 263/291 [00:00<00:00, 217.03it/s]Loading weights:  98%|█████████▊| 286/291 [00:01<00:00, 201.43it/s]Loading weights: 100%|██████████| 291/291 [00:01<00:00, 256.51it/s]
-[INFO|configuration_utils.py:967] 2026-03-22 20:26:22,773 >> loading configuration file generation_config.json from cache at /home/015902406/.cache/huggingface/hub/models--mistralai--Mistral-7B-v0.1/snapshots/27d67f1b5f57dc0953326b2601d68371d40ea8da/generation_config.json
-[INFO|configuration_utils.py:1014] 2026-03-22 20:26:22,773 >> Generate config GenerationConfig {
-  "bos_token_id": 1,
-  "eos_token_id": 2
-}
-
-[INFO|dynamic_module_utils.py:406] 2026-03-22 20:26:22,856 >> Could not locate the custom_generate/generate.py inside mistralai/Mistral-7B-v0.1.
-[INFO|configuration_utils.py:434] 2026-03-22 20:26:22,897 >> Configuration saved in ../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint/config.json
-[INFO|configuration_utils.py:803] 2026-03-22 20:26:22,900 >> Configuration saved in ../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint/generation_config.json
-Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:21<00:00, 21.88s/it]Writing model shards: 100%|██████████| 1/1 [00:21<00:00, 21.88s/it]
-[INFO|modeling_utils.py:3438] 2026-03-22 20:26:44,808 >> Model weights saved in ../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint/model.safetensors
-[INFO|tokenization_utils_base.py:2091] 2026-03-22 20:26:44,882 >> tokenizer config file saved in ../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint/tokenizer_config.json
-[INFO|configuration_utils.py:434] 2026-03-22 20:26:44,955 >> Configuration saved in ../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint/config.json
