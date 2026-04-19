@@ -1,7 +1,0 @@
-ppl=5.4648
-throughput_tok_per_s=22.71
-elapsed_s=12729.66
-model_mem_mib=15316.5
-peak_mem_mib=18670.5
-kv_cache_mem_mib=3354.0
-num_eval_tokens=289076

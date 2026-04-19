@@ -134,11 +134,4 @@ class MistralForCausalLM(_BaseMistralForCausalLM):
             kwargs["use_cache"] = False
             kwargs.pop("past_key_values", None)
 
-        use_cache = kwargs.get("use_cache")
-        effective_use_cache = use_cache if use_cache is not None else self.config.use_cache
-        if (effective_use_cache
-                and kwargs.get("past_key_values") is None
-                and self._n_active_attn_layers < self.config.num_hidden_layers):
-            from transformers.cache_utils import DynamicCache
-            kwargs["past_key_values"] = DynamicCache()
         return super().forward(*args, **kwargs)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=llmdrop-ppl
+#SBATCH --job-name=llmdrop-ppl-2
 #SBATCH --partition=gpuqs
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -25,8 +25,8 @@ set -euo pipefail
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
 
 # Full (unpruned) base model for comparison
-FULL_MODEL_PATH="meta-llama/Meta-Llama-3-8B"
-MODEL_NAME="llama3-8b"
+FULL_MODEL_PATH="mistralai/Mistral-7B-v0.1"
+MODEL_NAME="mistral-base"
 
 # Pruned streamllm model settings (must match prune_attention_variant.sh)
 PRUNE_METHOD="layer_drop"
@@ -35,12 +35,13 @@ DROP_N=8
 LAYER_DROP_METHOD="discrete"
 TARGET_LAYER="attn"
 ATTENTION_VARIANT="streamllm"
-WINDOW_SIZE=8192   # must match STREAMLLM_N_LOCAL in prune_attention_variant.sh
 
 # StreamingLLM eval settings (matching original streaming-llm paper config)
 START_SIZE=4
-RECENT_SIZE=8188
+RECENT_SIZE=4092
 NUM_EVAL_TOKENS=400000
+
+WINDOW_SIZE=${RECENT_SIZE}   # must match STREAMLLM_N_LOCAL in prune_attention_variant.sh
 
 # ─── DERIVED PATHS ─────────────────────────────────────────────────────────────
 
@@ -48,9 +49,9 @@ cd ~/LLM-Drop-v2
 export PYTHONPATH="$(pwd)/src${PYTHONPATH:+:$PYTHONPATH}"
 
 if [[ "$PRUNE_METHOD" == "block_drop" ]]; then
-    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}-${BLOCK_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${WINDOW_SIZE}"
+    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}-${BLOCK_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${WINDOW_SIZE}-${START_SIZE}"
 elif [[ "$PRUNE_METHOD" == "layer_drop" ]]; then
-    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}_${TARGET_LAYER}-${LAYER_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${WINDOW_SIZE}"
+    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}_${TARGET_LAYER}-${LAYER_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${WINDOW_SIZE}-${START_SIZE}"
 fi
 OUTPUT_DIR="../results_prune/${FOLDER_NAME}"
 PRUNED_MODEL_PATH="${OUTPUT_DIR}/checkpoint"
@@ -65,9 +66,11 @@ echo "  Job         : ${SLURM_JOB_ID}"
 echo "  Node        : ${SLURM_NODELIST}"
 echo "  Full model  : ${FULL_MODEL_PATH}"
 echo "  Pruned model: ${PRUNED_MODEL_PATH}"
+echo "  DROP_N      : ${DROP_N}"
 echo "  start_size  : ${START_SIZE}"
 echo "  recent_size : ${RECENT_SIZE}"
 echo "  eval_tokens : ${NUM_EVAL_TOKENS}"
+echo "  WINDOW_SIZE : ${WINDOW_SIZE}"
 echo "========================================"
 
 # ─── STEP 1: FULL MODEL ────────────────────────────────────────────────────────

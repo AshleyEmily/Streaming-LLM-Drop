@@ -5,7 +5,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
-#SBATCH --gres=gpu:h100:1
+#SBATCH --gres=gpu:a100:1
 #SBATCH --time=2:00:00
 #SBATCH --output=logs/%x_%j.out
 #SBATCH --error=logs/%x_%j.err
@@ -24,40 +24,44 @@ set -euo pipefail
 
 # ─── CONFIG ────────────────────────────────────────────────────────────────────
 
-PROMPT_LEN=512
-GEN_LEN=128
+PROMPT_LEN=2048
+GEN_LEN=2048
 RUNS=3
 
 # Streaming benchmark uses a longer gen_len to demonstrate bounded KV memory —
 # the key thesis result: memory stays flat at (start_size + recent_size) regardless of gen_len.
-STREAMING_GEN_LEN=4096
-STREAMLLM_N_INIT=128
-STREAMLLM_N_LOCAL=4096
+STREAMING_GEN_LEN=2048
+STREAMLLM_N_INIT=4
+STREAMLLM_N_LOCAL=8188
 
-BASELINE_PATH="mistralai/Mistral-7B-v0.1"
-
-# Standard (non-streaming) checkpoints
-STANDARD_CHECKPOINTS=(
-    "../results_prune/mistral-base-block_drop-discrete-drop8/checkpoint"
-    "../results_prune/mistral-base-layer_drop_attn-discrete-drop8/checkpoint"
-    "../results_prune/mistral-base-ntk_rope-nodrop/checkpoint"
-    "../results_prune/mistral-base-gqa-nodrop/checkpoint"
-)
-
-# Streaming checkpoints — run with enable_streaming_llm (--streaming flag).
-# The streamllm-nodrop baseline uses the base model directly: loading the nodrop
-# checkpoint would layer the calibration-style mask patch under enable_streaming_llm.
-STREAMING_CHECKPOINTS=(
-    # nodrop baseline: base model + streaming inference
-    "${BASELINE_PATH}"
-    # pruned with streamllm calibration + streaming inference
-    "../results_prune/mistral-base-layer_drop_attn-discrete-drop8-streamllm/checkpoint"
-)
+BASELINE_PATH="meta-llama/Meta-Llama-3-8B"
+MODEL_NAME="llama3-8b"
 
 # ─── SETUP ─────────────────────────────────────────────────────────────────────
 
 cd ~/LLM-Drop-v2
 export PYTHONPATH="$(pwd)/src${PYTHONPATH:+:$PYTHONPATH}"
+RESULTS_DIR="$(realpath ../results_prune)"
+
+# Standard (non-streaming) checkpoints
+STANDARD_CHECKPOINTS=(
+    "${RESULTS_DIR}/${MODEL_NAME}-layer_drop_attn-discrete-drop8/checkpoint"
+    "${RESULTS_DIR}/${MODEL_NAME}-layer_drop_attn-discrete-drop12/checkpoint"
+
+)
+
+# Streaming checkpoints — run with enable_streaming_llm (--streaming flag).
+# The streamllm-nodrop baseline uses the base model directly: loading the nodrop
+# checkpoint would layer the calibration-style mask patch under enable_streaming_llm.
+# Streaming checkpoints as parallel arrays: path, n_init, n_local
+STREAMING_CHECKPOINTS=(
+    "${RESULTS_DIR}/${MODEL_NAME}-streamllm-nodrop/checkpoint"
+    "${RESULTS_DIR}/${MODEL_NAME}-layer_drop_attn-discrete-drop8-streamllm-4092-4/checkpoint"
+    "${RESULTS_DIR}/${MODEL_NAME}-layer_drop_attn-discrete-drop8-streamllm-8188-4/checkpoint"
+    "${RESULTS_DIR}/${MODEL_NAME}-layer_drop_attn-discrete-drop12-streamllm-8188-4/checkpoint"
+)
+STREAMING_N_INIT=(4    4    4    4)
+STREAMING_N_LOCAL=(8188 4092 8188 8188)
 
 mkdir -p logs
 
@@ -93,14 +97,18 @@ done
 # Uses longer gen_len to show that KV memory stays bounded at
 # (start_size + recent_size) tokens regardless of generation length.
 
-for CKPT in "${STREAMING_CHECKPOINTS[@]}"; do
+NUM_STREAMING=${#STREAMING_CHECKPOINTS[@]}
+for ((i=0; i<NUM_STREAMING; i++)); do
+    CKPT="${STREAMING_CHECKPOINTS[$i]}"
+    N_INIT="${STREAMING_N_INIT[$i]}"
+    N_LOCAL="${STREAMING_N_LOCAL[$i]}"
     echo ""
-    echo "[Streaming] ${CKPT}"
+    echo "[Streaming] ${CKPT} (n_init=${N_INIT}, n_local=${N_LOCAL})"
     python scripts/benchmark_inference.py \
         --model_path  "${CKPT}" \
         --streaming \
-        --start_size  "${STREAMLLM_N_INIT}" \
-        --recent_size "${STREAMLLM_N_LOCAL}" \
+        --start_size  "${N_INIT}" \
+        --recent_size "${N_LOCAL}" \
         --prompt_len  "${PROMPT_LEN}" \
         --gen_len     "${STREAMING_GEN_LEN}" \
         --runs        "${RUNS}"

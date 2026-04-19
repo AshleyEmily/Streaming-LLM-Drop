@@ -100,6 +100,10 @@ def main():
 
     os.makedirs(args.output_dir, exist_ok=True)
     log_file = open(os.path.join(args.output_dir, "log.txt"), "w")
+    kv_log_file = open(os.path.join(args.output_dir, "kv_cache_growth.csv"), "w")
+    kv_log_file.write("token,allocated_mib\n")
+
+    KV_SAMPLE_INTERVAL = 1000
 
     loss_fn = CrossEntropyLoss(reduction="none")
     nlls = []
@@ -132,8 +136,20 @@ def main():
         print(neg_log_likelihood.item(), file=log_file, flush=True)
 
         num_eval_tokens += 1
+
+        if num_eval_tokens % KV_SAMPLE_INTERVAL == 0:
+            kv_bytes = sum(
+                entry[0].nbytes + entry[1].nbytes
+                for entry in past_key_values
+                if entry is not None
+            )
+            kv_log_file.write(f"{num_eval_tokens},{kv_bytes / 1024**2:.2f}\n")
+            kv_log_file.flush()
+
         if num_eval_tokens >= args.num_eval_tokens:
             break
+
+    kv_log_file.close()
 
     torch.cuda.synchronize()
     t_end = time.perf_counter()

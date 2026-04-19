@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=llmdrop-attn-stream
+#SBATCH --job-name=llmdrop-attn-stream-2
 #SBATCH --partition=gpuqs
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -40,10 +40,10 @@ ATTENTION_VARIANT="streamllm"
 
 # StreamLLM settings (used when ATTENTION_VARIANT=streamllm)
 # SEQ_LEN must exceed n_init + n_local for StreamLLM to differ from full attention
-STREAMLLM_N_INIT=128
-STREAMLLM_N_LOCAL=8192   # match Llama 3's full context window
-SEQ_LEN=16384             # must be > 128+8192=8320; 2× context is the natural choice
-# must be > STREAMLLM_N_INIT + STREAMLLM_N_LOCAL (128+8192=8320)
+STREAMLLM_N_INIT=4
+STREAMLLM_N_LOCAL=8188   # match Llama 3's full context window
+SEQ_LEN=16384             # must be > 4+8192=8196; 2× context is the natural choice
+# must be > STREAMLLM_N_INIT + STREAMLLM_N_LOCAL (4+8192=8196)
 
 # NTK-RoPE settings (used when ATTENTION_VARIANT=ntk_rope)
 NTK_ROPE_FACTOR=4.0
@@ -74,16 +74,16 @@ cd ~/LLM-Drop-v2
 export PYTHONPATH="$(pwd)/src${PYTHONPATH:+:$PYTHONPATH}"
 
 if [[ "$PRUNE_METHOD" == "block_drop" ]]; then
-    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}-${BLOCK_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}"
-    CACHE_SUFFIX="${PRUNE_METHOD}-${DATASET}-${N_CALIBRATION_SAMPLES}samples-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}"
+    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}-${BLOCK_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}-${STREAMLLM_N_INIT}"
+    CACHE_SUFFIX="${PRUNE_METHOD}-${DATASET}-${N_CALIBRATION_SAMPLES}samples-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}-${STREAMLLM_N_INIT}"
 elif [[ "$PRUNE_METHOD" == "layer_drop" ]]; then
-    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}_${TARGET_LAYER}-${LAYER_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}"
-    CACHE_SUFFIX="${PRUNE_METHOD}_${TARGET_LAYER}-${DATASET}-${N_CALIBRATION_SAMPLES}samples-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}"
+    FOLDER_NAME="${MODEL_NAME}-${PRUNE_METHOD}_${TARGET_LAYER}-${LAYER_DROP_METHOD}-drop${DROP_N}-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}-${STREAMLLM_N_INIT}"
+    CACHE_SUFFIX="${PRUNE_METHOD}_${TARGET_LAYER}-${DATASET}-${N_CALIBRATION_SAMPLES}samples-${ATTENTION_VARIANT}-${STREAMLLM_N_LOCAL}-${STREAMLLM_N_INIT}"
 fi
 
 OUTPUT_DIR="../results_prune/${FOLDER_NAME}"
 PRUNE_SAVE_PATH="${OUTPUT_DIR}/checkpoint"
-SIMILARITY_CACHE_FILE="../results_prune/cache/${MODEL_NAME}-${CACHE_SUFFIX}-${STREAMLLM_N_LOCAL}.pt"
+SIMILARITY_CACHE_FILE="../results_prune/cache/${MODEL_NAME}-${CACHE_SUFFIX}-${STREAMLLM_N_LOCAL}-${STREAMLLM_N_INIT}.pt"
 EVAL_OUTPUT_DIR="${OUTPUT_DIR}/eval"
 
 mkdir -p "${OUTPUT_DIR}" "../results_prune/cache" "${EVAL_OUTPUT_DIR}" logs
@@ -94,6 +94,10 @@ echo "  Node       : ${SLURM_NODELIST}"
 echo "  Method     : ${PRUNE_METHOD}"
 echo "  Attn variant: ${ATTENTION_VARIANT}"
 echo "  Model      : ${MODEL_NAME_OR_PATH}"
+echo "  DROP_N          : ${DROP_N}"
+echo "  STREAMLLM_N_INIT : ${STREAMLLM_N_INIT}"
+echo "  STREAMLLM_N_LOCAL: ${STREAMLLM_N_LOCAL}"
+echo "  SEQ_LEN          : ${SEQ_LEN}"
 echo "  Output     : ${PRUNE_SAVE_PATH}"
 echo "========================================"
 

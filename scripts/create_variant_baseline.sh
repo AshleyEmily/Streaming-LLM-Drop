@@ -26,20 +26,10 @@ set -euo pipefail
 
 MODEL_NAME_OR_PATH="mistralai/Mistral-7B-v0.1"
 
-STREAMLLM_N_INIT=128
-STREAMLLM_N_LOCAL=4096
+STREAMLLM_N_INIT=4
+STREAMLLM_N_LOCAL=4092
 NTK_ROPE_FACTOR=4.0
 GQA_NUM_KV_HEADS=4
-
-# Inference benchmark settings (streaming nodrop baseline)
-PROMPT_LEN=512
-GEN_LEN=4096
-BENCHMARK_RUNS=3
-
-# Inference benchmark settings (streaming nodrop baseline)
-PROMPT_LEN=512
-GEN_LEN=4096
-BENCHMARK_RUNS=3
 
 # ─── SETUP ─────────────────────────────────────────────────────────────────────
 
@@ -57,7 +47,7 @@ echo "========================================"
 # ─── StreamLLM baseline ────────────────────────────────────────────────────────
 
 echo ""
-echo "[1/3] StreamLLM baseline (n_init=${STREAMLLM_N_INIT}, n_local=${STREAMLLM_N_LOCAL})..."
+echo "[1/4] StreamLLM baseline (n_init=${STREAMLLM_N_INIT}, n_local=${STREAMLLM_N_LOCAL})..."
 python scripts/create_variant_baseline.py \
     --model_name_or_path "${MODEL_NAME_OR_PATH}" \
     --attention_variant  streamllm \
@@ -68,7 +58,7 @@ python scripts/create_variant_baseline.py \
 # ─── NTK-RoPE baseline ─────────────────────────────────────────────────────────
 
 echo ""
-echo "[2/3] NTK-RoPE baseline (factor=${NTK_ROPE_FACTOR})..."
+echo "[2/4] NTK-RoPE baseline (factor=${NTK_ROPE_FACTOR})..."
 python scripts/create_variant_baseline.py \
     --model_name_or_path "${MODEL_NAME_OR_PATH}" \
     --attention_variant  ntk_rope \
@@ -78,32 +68,27 @@ python scripts/create_variant_baseline.py \
 # ─── GQA baseline ──────────────────────────────────────────────────────────────
 
 echo ""
-echo "[3/3] GQA baseline (num_kv_heads=${GQA_NUM_KV_HEADS})..."
+echo "[3/4] GQA baseline (num_kv_heads=${GQA_NUM_KV_HEADS})..."
 python scripts/create_variant_baseline.py \
     --model_name_or_path "${MODEL_NAME_OR_PATH}" \
     --attention_variant  gqa \
     --gqa_num_kv_heads   "${GQA_NUM_KV_HEADS}" \
     --output_dir ../results_prune/mistral-base-gqa-nodrop/checkpoint
 
-# ─── StreamLLM inference benchmark (nodrop baseline) ───────────────────────────
-# Run directly on the base model — avoids loading the checkpoint's custom
-# modeling (which applies the calibration-style mask patch) before enable_streaming_llm.
-# This gives the clean nodrop latency/memory baseline to compare against pruned runs.
+# ─── Llama 3 StreamLLM baseline ────────────────────────────────────────────────
+
+LLAMA_MODEL="meta-llama/Meta-Llama-3-8B"
+LLAMA_STREAMLLM_N_INIT=4
+LLAMA_STREAMLLM_N_LOCAL=8188
 
 echo ""
-echo "[4/4] StreamLLM inference benchmark (nodrop baseline)..."
-mkdir -p ../results_prune/mistral-base-streamllm-nodrop
-python scripts/benchmark_inference.py \
-    --model_path      "${MODEL_NAME_OR_PATH}" \
-    --streaming \
-    --start_size      "${STREAMLLM_N_INIT}" \
-    --recent_size     "${STREAMLLM_N_LOCAL}" \
-    --prompt_len      "${PROMPT_LEN}" \
-    --gen_len         "${GEN_LEN}" \
-    --runs            "${BENCHMARK_RUNS}" \
-    2>&1 | tee ../results_prune/mistral-base-streamllm-nodrop/benchmark_streaming.txt
-
-# ─── DONE ──────────────────────────────────────────────────────────────────────
+echo "[4/4] Llama 3 StreamLLM baseline (n_init=${LLAMA_STREAMLLM_N_INIT}, n_local=${LLAMA_STREAMLLM_N_LOCAL})..."
+python scripts/create_variant_baseline.py \
+    --model_name_or_path "${LLAMA_MODEL}" \
+    --attention_variant  streamllm \
+    --streamllm_n_init   "${LLAMA_STREAMLLM_N_INIT}" \
+    --streamllm_n_local  "${LLAMA_STREAMLLM_N_LOCAL}" \
+    --output_dir ../results_prune/llama3-8b-streamllm-nodrop/checkpoint
 
 echo ""
 echo "========================================"
@@ -111,6 +96,5 @@ echo "  Done. Checkpoints:"
 echo "    ../results_prune/mistral-base-streamllm-nodrop/checkpoint"
 echo "    ../results_prune/mistral-base-ntk_rope-nodrop/checkpoint"
 echo "    ../results_prune/mistral-base-gqa-nodrop/checkpoint"
-echo "  Benchmark:"
-echo "    ../results_prune/mistral-base-streamllm-nodrop/benchmark_streaming.txt"
+echo "    ../results_prune/llama3-8b-streamllm-nodrop/checkpoint"
 echo "========================================"

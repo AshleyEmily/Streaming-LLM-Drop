@@ -40,7 +40,7 @@ PRUNE_METHOD="layer_drop"
 
 # --- block_drop settings (used when PRUNE_METHOD=block_drop) ---
 BLOCK_DROP_METHOD="discrete"   # "discrete" or "consecutive"
-DROP_N=8
+DROP_N=12
 
 # --- layer_drop settings (used when PRUNE_METHOD=layer_drop) ---
 LAYER_DROP_METHOD="discrete"
