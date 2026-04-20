@@ -1,25 +1,21 @@
-## What Matters in Transformers? Not All Attention is Needed
+## Lightweight Streaming LLMs: Attention Layer Pruning for Memory-Efficient Long-Sequence Inference
 
-**[Shwai He](https://shwai-he.github.io/)\*, Guoheng Sun\*, Zheyu Shen, [Ang Li](https://www.ang-li.com/)**
+**[Ashley Irawan](mailto:ashley.irawan@sjsu.edu), Kaikai Liu, Ph.D., Bernardo Flores, Ph.D.**
 
-**This is the official implementation of the paper [What Matters in Transformers? Not All Attention is Needed
-](https://arxiv.org/abs/2406.15786).** We conduct extensive experiments and analysis to reveal the architecture redundancy within transformer-based Large Language Models (LLMs). 
-Pipeline for Block Drop and Layer Drop is based on the [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory).
-The quantization is implemented based on the [AutoAWQ](https://github.com/casper-hansen/AutoAWQ) and [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ).
+**This is the implementation of the paper _Lightweight Streaming LLMs: Attention Layer Pruning for Memory-Efficient Long-Sequence Inference_.** We combine [LLM-Drop](https://arxiv.org/abs/2406.15786)'s attention layer pruning with [StreamingLLM](https://arxiv.org/abs/2309.17453)'s KV cache bounding for memory-efficient long-sequence inference on constrained hardware. Code for the parent methods is based on [LLM-Drop](https://github.com/CASE-Lab-UMD/LLM-Drop) and [StreamingLLM](https://github.com/mit-han-lab/streaming-llm).
 
 ## Introduction
-Transformer-based large language models (LLMs) often contain architectural redundancies. In this work, we systematically investigate redundancy across different types of modules, including Blocks, Attention layers, and MLP layers. Surprisingly, we found that Attention layers, the core component of transformers, are particularly redundant. For example, in the Llama-3-70B model, **half of the Attention layers can be dropped** while maintaining performance. 
-Our observations indicate that this redundancy in Attention layers persists throughout the training process, necessitating Attention Drop.
-Additionally, dropping Attention layers significantly enhances computational and memory efficiency. 
-Our findings are informative for the ML community and provide insights for future architecture design.
 
-![Layer-Drop.svg](Layer_Drop.svg)
+![Proposed Method](proposed.png)
 
-## News
-- **Nov 2024**: Updated the code to support additional language models, including [Gemma2](https://arxiv.org/abs/2408.00118), [Baichuan](https://arxiv.org/abs/2309.10305), [DeepSeek](https://arxiv.org/abs/2401.06066), [Yi](https://arxiv.org/abs/2403.04652), [Solar](https://arxiv.org/abs/2312.15166). Yi and Solar refer to Llama, and we checked their availability.
-- **Sep 2024**: Released checkpoints for [dropped models](https://huggingface.co/collections/LLM-Drop/llm-drop-66dde616140f04eb18424a0a) using Block Drop and Layer Drop.  
-- **Jun 2024**: Published preprint on [arXiv](https://arxiv.org/abs/2406.15786) along with the related codebase.
+LLMs face two compounding memory bottlenecks during long-sequence inference: quadratic attention complexity and linear KV cache growth with sequence length. **LLM-Drop** prunes redundant attention layers entirely, reducing model depth and eliminating their associated KV cache entries. **StreamingLLM** bounds KV cache growth per layer by retaining only attention sink tokens and a rolling window of recent tokens. Despite their complementary nature, their combination had not been investigated.
 
+In this work, we make three contributions: (1) we introduce **stream-aware calibration** — applying an attention mask during LLM-Drop's importance scoring to emulate the sparse attention pattern of StreamingLLM's KV cache eviction, ensuring pruning decisions are made under the same conditions the model 
+operates in at inference time; (2) we evaluate attention layer pruning in the **long-text inference setting**, extending LLM-Drop's findings beyond downstream tasks — demonstrating that pruning alone consistently delivers 25% KV cache reduction and 1.16–1.17× throughput gains regardless of how the cache is bounded; and (3) we introduce the **Memory-Perplexity Degradation Ratio (MPDR)** µ to quantify the memory-perplexity tradeoff across all configurations.
+
+For Llama 3-8B, combining streaming with 8-layer pruning achieves **25% KV cache reduction at a cost of only 1.21 perplexity points** (µ = 0.90) — the only configuration where memory savings proportionally exceed perplexity cost. For Mistral-7B, which natively bounds its KV cache via sliding window attention, pruning alone consistently delivers 25% KV cache reduction and ~1.17× throughput gains in the long-text inference setting.
+
+![Calibration vs Physical Eviction](calibration_vs_phys_evict.png)
 
 ## Quick Start
 
@@ -29,113 +25,113 @@ Our findings are informative for the ML community and provide insights for futur
 conda create -n llm-drop python=3.10
 conda activate llm-drop
 
-git clone https://github.com/CASE-Lab-UMD/LLM-Drop
-
-#For Dropping:
-cd ./LLM-Drop
+git clone https://github.com/AshleyEmily/Streaming-LLM-Drop
+cd Streaming-LLM-Drop
 pip install -e .
-
-#For Quantization:
-cd ./src/llmtuner/compression/quantization/AutoAWQ
-pip install -e .
-
-cd ./src/llmtuner/compression/quantization/AutoAWQ/AutoAWQ_kernels
-pip install -e .
-
-cd ./src/llmtuner/compression/quantization/AutoGPTQ
-pip install -vvv --no-build-isolation -e .
 ```
 
-## Prepare Models
-Download the models (e.g., Mistral-7B, Llama-2 and Llama-3) from HuggingFace. We create [new config and modeling files](https://github.com/Shwai-He/LLM-Drop/tree/main/src/llmtuner/compression/prune/models) to represent the models by layers or blocks. 
-The key ``auto_map`` needs to be added in the config.json to utilize the new files. 
-Take Mistral-7B as an example: 
-```json
-"auto_map": {
-    "AutoConfig": "configuration_dropped_mistral.MistralConfig",
-    "AutoModelForCausalLM": "modeling_dropped_mistral.MistralForCausalLM"
-  },
-```
-Additionally, the key ``drop_attn_list`` and ``drop_mlp_list`` respectively mark which Attention layers and MLPs should be dropped based on their layer index. For instance, 
+#### Requirements
 
-#### Drop 4 Attention layers:
-```json
- "drop_mlp_list": [],
- "drop_attn_list": [25, 26, 24, 22],
-```
-#### Drop 4 MLPs layers:
-```json
- "drop_mlp_list": [26, 27, 25, 24],
- "drop_attn_list": [],
-```
-#### Drop 4 Blocks:
-```json
- "drop_mlp_list": [26, 25, 24, 27],
- "drop_attn_list": [26, 25, 24, 27],
+```bash
+pip install -r requirements.txt
 ```
 
-## Run Dropping
+## Run Pruning
+
+#### Stream-Aware Layer Drop (recommended)
+Calibrates importance scores under StreamingLLM's eviction pattern before pruning:
+```bash
+bash scripts/dropping/layer_drop.sh
+```
+
+#### Standard Layer Drop
+```bash
+bash scripts/dropping/layer_drop.sh
+```
 
 #### Block Drop
 ```bash
 bash scripts/dropping/block_drop.sh
 ```
 
-#### Layer Drop
-```bash
-bash scripts/dropping/layer_drop.sh
-```
-
 #### Joint Layer Drop
 ```bash
 bash scripts/dropping/layer_drop_joint.sh
 ```
-These bash scripts will generate the importance scores for blocks/layers, determine which blocks/layers to retain, and create new model configuration files indicating the dropped modules.
+
+## Run Inference
+
+#### Long-Sequence Perplexity (WikiText-2)
+Evaluates perplexity over the full WikiText-2 test split (~300K tokens) with rolling KV cache eviction:
+```bash
+bash scripts/eval_long_ppl.sh
+```
+
+#### Standard Perplexity
+```bash
+bash scripts/eval_standard_ppl.sh
+```
+
+#### Streaming Baseline
+```bash
+bash scripts/eval_streamllm_baseline.sh
+```
+
+#### Prune and Evaluate (combined)
+```bash
+bash scripts/prune_and_eval.sh
+```
 
 ## Benchmarks
-#### Performance
-Evaluate the performance of the model with dropping some modules on specific tasks:
+
+#### Downstream Task Performance
+Evaluates HellaSwag, MMLU, OpenBookQA, and WinoGrande:
 ```bash
 bash scripts/benchmark/benchmark_lm_eval.sh
 ```
 
-The evaluation code is based on [EleutherAI/lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). To fully reproduce our results, please use [this version](https://github.com/s1ghhh/lm-evaluation-harness). It samples few-shot based on the index of the samples, avoiding the issue of result variation with the number of processes during data parallel inference.
-Remember to use the modeling files in `src/llmtuner/model` to load the Mistral and Llama models.
+#### Throughput and Memory
+Records peak GPU memory, KV cache footprint, and tokens/sec across configurations:
+```bash
+bash scripts/benchmark_inference.sh
+```
 
-#### SpeedUp
-Evaluate the speedup ratio of the model with dropping some modules:
+#### Speedup
 ```bash
 bash scripts/benchmark/benchmark_speed.sh
 ```
 
-#### Quantization
-Please refer to [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ) and [AutoAWQ](https://github.com/casper-hansen/AutoAWQ). Ensure you carefully install the packages that correspond to your CUDA version.
-For quantization, use the following scripts:
-```bash
-bash scripts/quantization/awq.sh
-bash scripts/quantization/gptq.sh
-```
+## Key Results
 
-[//]: # (## Experiments)
+**Llama 3-8B** — no native KV cache bounding:
+
+| Config | Drop | Window | PPL | Tok/s | Peak KV (MiB) | µ |
+|---|---|---|---|---|---|---|
+| Streaming | 0 | 4096 | 5.36 | 30.5 | 512 | — |
+| Streaming + Pruning | 8 | 4096 | 6.57 | 36.3 | 384 | **0.90** |
+| Streaming + Pruning | 8 | 8192 | 6.76 | 27.4 | 768 | 0.95 |
+| Streaming + Pruning | 12 | 8192 | 8.96 | 31.2 | 640 | 1.71 |
+
+**Mistral-7B-v0.1** — native sliding window attention:
+
+| Config | Drop | Window | PPL | Tok/s | Peak KV (MiB) | µ |
+|---|---|---|---|---|---|---|
+| Standard | 0 | 4096 | 4.68 | 32.5 | 512 | — |
+| Pruning only | 8 | 4096 | 6.10 | 37.9 | 384 | 1.21 |
+| Streaming + Pruning | 8 | 4096 | 6.30 | 33.8 | 384 | 1.45 |
+
+µ (MPDR) = ∆PPL% / ∆Mem%. Lower is better; µ < 1 means memory savings exceed perplexity cost.
 
 ## Citation
 
-```latex
-@misc{he2024matterstransformersattentionneeded,
-      title={What Matters in Transformers? Not All Attention is Needed}, 
-      author={Shwai He and Guoheng Sun and Zheyu Shen and Ang Li},
-      year={2024},
-      eprint={2406.15786},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2406.15786}, 
+```bibtex
+@article{irawan2026lightweightstreaming,
+      title={Lightweight Streaming LLMs: Attention Layer Pruning for Memory-Efficient Long-Sequence Inference},
+      author={Ashley Irawan and Bernardo Flores and Kaikai Liu},
+      year={2026}
 }
 ```
 
-## Contact Us
+## Contact
 
-If you have any questions, please contact:
-
-- Shwai He: shwaihe@umd.edu
-
-- Guoheng Sun: ghsun@umd.edu
+- Ashley Irawan: ashley.irawan@sjsu.edu
