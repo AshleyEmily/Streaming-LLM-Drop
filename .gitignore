@@ -161,3 +161,8 @@ cython_debug/
 
 logs_cluster/
 results_prune/
+
+.DS_Store
+results.sh
+upload.sh
+logs.sh
