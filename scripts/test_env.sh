@@ -12,6 +12,9 @@
 #SBATCH --output=logs/env_test_%j.out
 #SBATCH --error=logs/env_test_%j.err
 
+export http_proxy=http://172.16.1.2:3128
+export https_proxy=http://172.16.1.2:3128
+
 set -euo pipefail
 
 # ── Activate your environment ──────────────────────────────────────────────────
